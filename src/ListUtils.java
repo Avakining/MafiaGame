@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * @param <T> Type
- * 
+ * *
  */
-public abstract class ListUtils<T> {
-	public ArrayList<T> randomizeList(ArrayList<T> inList){
-		Collections.shuffle(inList);
-		return inList;
+public class ListUtils{
+	public static boolean isItemInArray(ArrayList<String> arr, String item){
+		for (String i : arr){
+			if (i.equals(item)){
+				return true;
+			}
+		}
+		return false;
 	}
 }
