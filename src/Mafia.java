@@ -48,8 +48,21 @@ public class Mafia{
 	 */
 	public void setPlayers(ArrayList<String> playersIn){
 		Collections.sort(playersIn);
-		if (playersIn.size() <= 1){
-			System.err.println("Error: too few players");
+		while (playersIn.size() <= 1){
+			System.err.println("Error: too few players, adding default");
+			playersIn.add("1");
+			playersIn.add("2");
+			playersIn.add("3");
+			playersIn.add("4");
+			playersIn.add("5");
+			playersIn.add("6");
+			playersIn.add("7");
+			playersIn.add("8");
+			playersIn.add("9");
+			playersIn.add("10");
+			playersIn.add("11");
+			playersIn.add("12");
+			playersIn.add("13");
 		}
 		Boolean hasDuplicates = false;
 		for(int i = 1; i < playersIn.size(); i++) {

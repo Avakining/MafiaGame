@@ -20,6 +20,7 @@ public class Player{
 	 */
 	public Player(String n){
 		name = n;
+		isDrunk = false;
 	}
 
 	/**

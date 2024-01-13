@@ -14,26 +14,25 @@ public class MafiaDriver{
 	private static Scanner scan;
 	
 	/**
-	 * @param args args
+	 * @param args Arguments
 	 */
 	public static void main(String[] args){
 		mafiaGame = new Mafia();
 		scan = new Scanner(System.in);
-		
 		System.out.println("Welcome to the Mafia GM Utility!\nYou will be asked to enter values. Each time this happens, type in the value requested then hit enter.\nWhen finished with that section, hit enter without typing anything.\nSome fields have defaults. They will be specified. Just hit enter as if you were finished entering information to use those defaults.");
-		
 		players();
-		
 		printGap();
-		
 		factions();
-		
+		printGap();
 		categories();
-		
+		printGap();
 		roles();
-		
+		printGap();
 		assignRoles();
-		
+		printGap();
+		getDrunk();
+		printGap();
+		showResults();
 		scan.close();
 	}
 	
@@ -44,7 +43,7 @@ public class MafiaDriver{
 	private static void players(){
 		// Get player list from user
 		ArrayList<String> players = new ArrayList<>();
-		System.out.print("Enter the player names:");
+		System.out.println("Enter the player names:");
 		boolean cont = true;
 		while (cont){
 			String in = scan.nextLine();
@@ -104,7 +103,10 @@ public class MafiaDriver{
 				while (cont2){
 					in = scan.nextLine();
 					if (in.strip().equals("")){
-						cont = false;
+						cont2 = false;
+						anyFactions.add("Town");
+						anyFactions.add("Neutral Evil");
+						anyFactions.add("Mafia");
 					} else if (ListUtils.isItemInArray(factionNames, in)){
 						anyFactions.add(in);
 					} else{
@@ -123,6 +125,10 @@ public class MafiaDriver{
 		
 		ArrayList<Integer> numFaction = new ArrayList<>(factionNames.size());
 		
+		// for (String f : factionNames){
+		// System.out.println(f);
+		// }
+		
 		boolean addsUp = false;
 		while (!addsUp){
 			int total = 0;
@@ -130,7 +136,7 @@ public class MafiaDriver{
 				System.out.println("How many members should there be of faction " + factionNames.get(i) + "?");
 				int in = scan.nextInt();
 				if (in >= 0){
-					numFaction.set(i, in);
+					numFaction.add(i, in);
 					total += in;
 				} else{
 					i--;
@@ -149,9 +155,13 @@ public class MafiaDriver{
 		
 		printGap();
 		
-		System.out.println("Factions\tNumber of Players");
+		System.out.println("Factions\t\tNumber of Players");
 		for (Faction element : mafiaGame.getFactions()){
-			System.out.println(element.getFactionName() + "\t" + element.getMinNum());
+			System.out.print(element.getFactionName() + "\t");
+			if (element.getFactionName().length() <= 8){
+				System.out.print("\t");
+			}
+			System.out.println(element.getMinNum());
 		}
 	}
 	
@@ -161,8 +171,8 @@ public class MafiaDriver{
 		ArrayList<String> categoryNames;
 		ArrayList<Integer> numCategory;
 		for (int i = 0; i < mafiaGame.getFactions().size(); i++){
-			categoryNames = new ArrayList<>();
-			System.out.print("Enter the categories in the faction" + mafiaGame.getFactions().get(i));
+			categoryNames = new ArrayList<String>();
+			System.out.print("Enter the categories in the faction " + mafiaGame.getFactions().get(i).getFactionName());
 			// Inform about defaults
 			switch (mafiaGame.getFactions().get(i).getFactionName()){
 				case "Town":
@@ -180,7 +190,9 @@ public class MafiaDriver{
 					break;
 				default:
 					System.out.println();
+					break;
 			}
+			// FIXME this scan is instantly "" already for some reason
 			Boolean cont = true;
 			while (cont){
 				String in = scan.nextLine();
@@ -205,13 +217,14 @@ public class MafiaDriver{
 					case "Neutral Evil":
 					case "Mafia":
 					case "Any":
+					default:
 						categoryNames.add("All");
 						break;
 				}
 			}
 			
 			// Get numbers
-			numCategory = new ArrayList<>(categoryNames.size());
+			numCategory = new ArrayList<Integer>();
 			
 			Boolean addsUp = false;
 			while (!addsUp){
@@ -220,28 +233,34 @@ public class MafiaDriver{
 					System.out.println("What is the minumum number of players that should be in the category " + categoryNames.get(j) + "?");
 					int in = scan.nextInt();
 					if (in >= 0){
-						numCategory.set(j, in);
+						numCategory.add(in);
 						total += in;
 					} else{
 						j--;
 					}
 				}
-				if (total <= mafiaGame.getPlayers().size()){
+				if (total <= mafiaGame.getFactions().get(i).getMinNum()){
 					addsUp = true;
 				} else{
 					System.out.println("Error: those values are greater than the number of players in this faction");
 				}
 			}
 			
-			for (int j = 0; j < mafiaGame.getFactions().size(); j++){
-				mafiaGame.getFactions().get(j).addCategory(categoryNames.get(j), numCategory.get(j));
+			for (int j = 0; j < categoryNames.size(); j++){
+				mafiaGame.getFactions().get(i).addCategory(categoryNames.get(j), numCategory.get(j));
 			}
 			
 			printGap();
 			
-			System.out.println("Category\tNumber of Players");
+			// System.out.println("Number of categories in the faction " + mafiaGame.getFactions().get(i).getFactionName() + ": " + mafiaGame.getFactions().get(i).getCategories().size());
+			
+			System.out.println("Category\t\tNumber of Players");
 			for (Category element : mafiaGame.getFactions().get(i).getCategories()){
-				System.out.println(element.getName() + "\t" + element.getMinNum());
+				System.out.print(element.getName() + "\t");
+				if (element.getName().length() <= 8){
+					System.out.print("\t");
+				}
+				System.out.println(element.getMinNum());
 			}
 		}
 	}
@@ -375,7 +394,14 @@ public class MafiaDriver{
 					System.out.println("What is the maximum number of players that should have the role " + roleNames.get(i) + "?");
 					switch (faction.getFactionName()){
 						case "Town":
-							System.out.println(" (Default: no limit)");
+							switch (category.getName()){
+								case "Necrotic":
+									System.out.println(" (Default: limit 1)");
+									break;
+								default:
+									System.out.println(" (Default: no limit)");
+									break;
+							}
 							break;
 						default:
 							System.out.println(" (Default: limit 1)");
@@ -385,10 +411,17 @@ public class MafiaDriver{
 					if (in.equals("")){
 						switch (faction.getFactionName()){
 							case "Town":
-								roleMax.set(i, Integer.MAX_VALUE);
+								switch (category.getName()){
+									case "Necrotic":
+										roleMax.add(i, 1);
+										break;
+									default:
+										roleMax.add(i, Integer.MAX_VALUE);
+										break;
+								}
 								break;
 							default:
-								roleMax.set(i, 1);
+								roleMax.add(i, 1);
 								break;
 						}
 					} else{
@@ -401,15 +434,54 @@ public class MafiaDriver{
 				
 				printGap();
 				
-				System.out.println("Role\tMax Number");
+				System.out.println("Role\t\tMax Number");
 				for (Role role : category.getRoles()){
-					System.out.println(role.getName() + "\t" + role.getMaxNum());
+					System.out.println(role.getName() + "\t");
+					if (role.getName().length() <= 8){
+						System.out.print("\t");
+					}
+					System.out.println(role.getMaxNum());
 				}
 			}
 		}
 	}
 	
 	private static void assignRoles(){
-		
+		// TODO
+	}
+	
+	private static void getDrunk(){
+		System.out.println("Do you want a Drunk? (Y/n)");
+		String in = scan.nextLine();
+		if (in.toUpperCase().equals("Y")){
+			mafiaGame.selectDrunk().setIsDrunk(true);
+		}
+	}
+	
+	private static void showResults(){
+		System.out.println("Name\t\tFaction\t\tCategory\t\tRole\t\tDrunk");
+		for (Player p : mafiaGame.getPlayers()){
+			System.out.print(p.getName() + "\t");
+			if (p.getName().length() <= 8){
+				System.out.print("\t");
+			}
+			System.out.print(p.getFaction().getFactionName() + "\t");
+			if (p.getFaction().getFactionName().length() <= 8){
+				System.out.print("\t");
+			}
+			System.out.print(p.getCategory().getName() + "\t");
+			if (p.getCategory().getName().length() <= 8){
+				System.out.print("\t");
+			}
+			System.out.print(p.getRole().getName());
+			if (p.getIsDrunk()){
+				if (p.getRole().getName().length() <= 8){
+					System.out.print("\t");
+				}
+				System.out.println("\tDrunk");
+			} else{
+				System.out.println();
+			}
+		}
 	}
 }
