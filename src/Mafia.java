@@ -70,7 +70,7 @@ public class Mafia{
 	 * @return List of players
 	 */
 	public ArrayList<Player> getPlayers(){
-		return new ArrayList<Player>(players);
+		return players;
 	}
 	
 	/**
@@ -108,5 +108,9 @@ public class Mafia{
 	public Player selectDrunk(){
 		Random r = new Random();
 		return players.get(r.nextInt(players.size()));
+	}
+	
+	public ArrayList<Faction> getFactions(){
+		return factions;
 	}
 }

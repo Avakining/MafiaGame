@@ -10,6 +10,7 @@ import java.util.Random;
 public class Player{
 	private String name;
 	private Role role;
+	private Faction faction;
 	private Category category;
 	private Boolean isDrunk;
 	
@@ -68,5 +69,19 @@ public class Player{
 	 */
 	public void setCategory(Category category){
 		this.category = category;
+	}
+
+	/**
+	 * @return the faction
+	 */
+	public Faction getFaction(){
+		return faction;
+	}
+
+	/**
+	 * @param faction the faction to set
+	 */
+	public void setFaction(Faction faction){
+		this.faction = faction;
 	}
 }
