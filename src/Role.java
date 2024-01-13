@@ -8,6 +8,7 @@
 public class Role{
 	private int maxNum;
 	private String name;
+	private int numCurr;
 	
 	/**
 	 * Constructor
@@ -17,6 +18,7 @@ public class Role{
 	public Role(String name, int maxNum) {
 		this.name = name;
 		this.maxNum = maxNum;
+		numCurr = 0;
 	}
 	
 	/**
@@ -41,4 +43,18 @@ public class Role{
 	public String getName(){
 		return name;
 	}
+	
+	/**
+	 * @return the numCurr
+	 */
+	public int getNumCurr(){
+		return numCurr;
+	}
+	
+	/**
+	 */
+	public void addNumCurr(){
+		this.numCurr++;
+	}
+	
 }

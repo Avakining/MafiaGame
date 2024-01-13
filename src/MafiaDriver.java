@@ -4,6 +4,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -27,6 +28,8 @@ public class MafiaDriver{
 		categories();
 		printGap();
 		roles();
+		printGap();
+		assignCategories();
 		printGap();
 		assignRoles();
 		printGap();
@@ -91,13 +94,12 @@ public class MafiaDriver{
 		for (String s : factionNames){
 			System.out.println(s);
 		}
-		ArrayList<String> anyFactions;
+		ArrayList<String> anyFactions = new ArrayList<>();
 		System.out.println("Do you want an Any category? (Y/n)");
 		cont = true;
 		while (cont){
 			String in = scan.nextLine();
 			if (in.strip().toUpperCase().equals("Y")){
-				anyFactions = new ArrayList<>();
 				System.out.println("Which roles should \"Any\" be able to become? (Default: Town, Neutral Evil, Mafia)");
 				boolean cont2 = true;
 				while (cont2){
@@ -113,7 +115,6 @@ public class MafiaDriver{
 						System.out.println("That is not an added faction. Please try again");
 					}
 				}
-				
 				factionNames.add("Any");
 				cont = false;
 			} else if (in.strip().toUpperCase().equals("N")){
@@ -153,12 +154,18 @@ public class MafiaDriver{
 			mafiaGame.addFaction(factionNames.get(i), numFaction.get(i));
 		}
 		
+		ArrayList<Faction> anyFactionArr = new ArrayList<Faction>();
+		for (String s : anyFactions){
+			anyFactionArr.add(ListUtils.findFaction(mafiaGame.getFactions(), s));
+		}
+		mafiaGame.setAllowedAny(anyFactionArr);
+		
 		printGap();
 		
 		System.out.println("Factions\t\tNumber of Players");
 		for (Faction element : mafiaGame.getFactions()){
-			System.out.print(element.getFactionName() + "\t");
-			if (element.getFactionName().length() <= 8){
+			System.out.print(element.getName() + "\t");
+			if (element.getName().length() <= 8){
 				System.out.print("\t");
 			}
 			System.out.println(element.getMinNum());
@@ -173,9 +180,9 @@ public class MafiaDriver{
 		for (int i = 0; i < mafiaGame.getFactions().size(); i++){
 			categoryNames = new ArrayList<String>();
 			scan.nextLine(); // idk why this is needed, but it is
-			System.out.print("Enter the categories in the faction " + mafiaGame.getFactions().get(i).getFactionName());
+			System.out.print("Enter the categories in the faction " + mafiaGame.getFactions().get(i).getName());
 			// Inform about defaults
-			switch (mafiaGame.getFactions().get(i).getFactionName()){
+			switch (mafiaGame.getFactions().get(i).getName()){
 				case "Town":
 					System.out.println(" (Default: Investigative, Protective, Killing, Necrotic, Support)");
 					break;
@@ -205,7 +212,7 @@ public class MafiaDriver{
 			
 			// Set defaults
 			if (categoryNames.size() == 0){
-				switch (mafiaGame.getFactions().get(i).getFactionName()){
+				switch (mafiaGame.getFactions().get(i).getName()){
 					case "Town":
 						categoryNames.add("Investigative");
 						categoryNames.add("Protective");
@@ -223,6 +230,8 @@ public class MafiaDriver{
 				}
 			}
 			
+			
+
 			// Get numbers
 			numCategory = new ArrayList<Integer>();
 			
@@ -246,13 +255,16 @@ public class MafiaDriver{
 				}
 			}
 			
+			categoryNames.add("Random");
+			numCategory.add(0);
+			
 			for (int j = 0; j < categoryNames.size(); j++){
 				mafiaGame.getFactions().get(i).addCategory(categoryNames.get(j), numCategory.get(j));
 			}
 			
 			printGap();
 			
-			// System.out.println("Number of categories in the faction " + mafiaGame.getFactions().get(i).getFactionName() + ": " + mafiaGame.getFactions().get(i).getCategories().size());
+			// System.out.println("Number of categories in the faction " + mafiaGame.getFactions().get(i).getName() + ": " + mafiaGame.getFactions().get(i).getCategories().size());
 			
 			System.out.println("Category\t\tNumber of Players");
 			for (Category element : mafiaGame.getFactions().get(i).getCategories()){
@@ -271,183 +283,302 @@ public class MafiaDriver{
 		ArrayList<String> roleNames;
 		ArrayList<Integer> roleMax;
 		for (Faction faction : mafiaGame.getFactions()){
-			for (Category category : faction.getCategories()){ // loop through each category
-				roleNames = new ArrayList<>();
-				System.out.println("Enter the roles in the category " + category.getName());
-				switch (faction.getFactionName()){
-					case "Town":
-						switch (category.getName()){
-							case "Investigative":
-								System.out.println(" (Defaults: Sheriff, Psychic, Lookout, Tracker)");
-								break;
-							case "Protective":
-								System.out.println(" (Defaults: Bodyguard, Doctor)");
-								break;
-							case "Killing":
-								System.out.println(" (Defaults: Vigilante, Veteran)");
-								break;
-							case "Necrotic":
-								System.out.println(" (Defaults: Medium, Necromancer)");
-								break;
-							case "Support":
-								System.out.println(" (Defaults: Swapper, Escort, Admirer, Mayor)");
-								break;
-						}
-						break;
-					case "Neutral Killing":
-						switch (category.getName()){
-							case "All":
-								System.out.println(" (Defaults: Serial Killer, Cannibal, Arsonist)");
-								break;
-						}
-						break;
-					case "Neutral Evil":
-						switch (category.getName()){
-							case "All":
-								System.out.println(" (Defaults: Jester, Executioner)");
-								break;
-						}
-						break;
-					case "Mafia":
-						switch (category.getName()){
-							case "All":
-								System.out.println(" (Defaults: Consort, Consigliere, Ambusher, Magnate, Framer)");
-								break;
-						}
-						break;
-				}
-				Boolean cont = true;
-				while (cont){
-					String in = scan.nextLine();
-					if (in.strip().equals("")){
-						cont = false;
-					} else{
-						roleNames.add(in);
-					}
-				}
-				
-				// Set defaults
-				if (roleNames.size() == 0){
-					switch (faction.getFactionName()){
-						case "Town":
-							switch (category.getName()){
-								case "Investigative":
-									roleNames.add("Sheriff");
-									roleNames.add("Psychic");
-									roleNames.add("Lookout");
-									roleNames.add("Tracker");
-									break;
-								case "Protective":
-									roleNames.add("Bodyguard");
-									roleNames.add("Doctor");
-									break;
-								case "Killing":
-									roleNames.add("Vigilante");
-									roleNames.add("Veteran");
-									break;
-								case "Necrotic":
-									roleNames.add("Medium");
-									roleNames.add("Necromancer");
-									break;
-								case "Support":
-									roleNames.add("Swapper");
-									roleNames.add("Escort");
-									roleNames.add("Admirer");
-									roleNames.add("Mayor");
-									break;
-							}
-							break;
-						case "Neutral Killing":
-							switch (category.getName()){
-								case "All":
-									roleNames.add("Serial Killer");
-									roleNames.add("Cannibal");
-									roleNames.add("Arsonist");
-									break;
-							}
-							break;
-						case "Neutral Evil":
-							switch (category.getName()){
-								case "All":
-									roleNames.add("Jester");
-									roleNames.add("Executioner");
-									break;
-							}
-							break;
-						case "Mafia":
-							switch (category.getName()){
-								case "All":
-									roleNames.add("Consort");
-									roleNames.add("Consigliere");
-									roleNames.add("Ambusher");
-									roleNames.add("Magnate");
-									roleNames.add("Framer");
-									break;
-							}
-							break;
-					}
-				}
-				
-				// Define max number of each role
-				roleMax = new ArrayList<>();
-				for (int i = 0; i < roleNames.size(); i++){
-					System.out.println("What is the maximum number of players that should have the role " + roleNames.get(i) + "?");
-					switch (faction.getFactionName()){
-						case "Town":
-							switch (category.getName()){
-								case "Necrotic":
-									System.out.println(" (Default: limit 1)");
-									break;
-								default:
-									System.out.println(" (Default: no limit)");
-									break;
-							}
-							break;
-						default:
-							System.out.println(" (Default: limit 1)");
-							break;
-					}
-					String in = scan.nextLine();
-					if (in.equals("")){
-						switch (faction.getFactionName()){
+			if (!faction.getName().equals("Any")){
+				for (Category category : faction.getCategories()){ // loop through each category
+					roleNames = new ArrayList<>();
+					if (!category.getName().equals("Random")){
+						System.out.print("Enter the roles in the category " + category.getName() + " in faction " + faction.getName());
+						switch (faction.getName()){
 							case "Town":
 								switch (category.getName()){
-									case "Necrotic":
-										roleMax.add(i, 1);
+									case "Investigative":
+										System.out.println(" (Defaults: Sheriff, Psychic, Lookout, Tracker)");
 										break;
-									default:
-										roleMax.add(i, Integer.MAX_VALUE);
+									case "Protective":
+										System.out.println(" (Defaults: Bodyguard, Doctor)");
+										break;
+									case "Killing":
+										System.out.println(" (Defaults: Vigilante, Veteran)");
+										break;
+									case "Necrotic":
+										System.out.println(" (Defaults: Medium, Necromancer)");
+										break;
+									case "Support":
+										System.out.println(" (Defaults: Swapper, Escort, Admirer, Mayor)");
+										break;
+								}
+								break;
+							case "Neutral Killer":
+								switch (category.getName()){
+									case "All":
+										System.out.println(" (Defaults: Serial Killer, Cannibal, Arsonist)");
+										break;
+								}
+								break;
+							case "Neutral Evil":
+								switch (category.getName()){
+									case "All":
+										System.out.println(" (Defaults: Jester, Executioner)");
+										break;
+								}
+								break;
+							case "Mafia":
+								switch (category.getName()){
+									case "All":
+										System.out.println(" (Defaults: Consort, Consigliere, Ambusher, Magnate, Framer)");
 										break;
 								}
 								break;
 							default:
-								roleMax.add(i, 1);
-								break;
+								System.out.println();
 						}
-					} else{
-						int intIn = Integer.parseInt(in);
-						roleMax.set(i, intIn);
+						Boolean cont = true;
+						while (cont){
+							String in = scan.nextLine();
+							if (in.strip().equals("")){
+								cont = false;
+							} else{
+								roleNames.add(in);
+							}
+						}
+						
+						// Set defaults
+						if (roleNames.size() == 0){
+							switch (faction.getName()){
+								case "Town":
+									switch (category.getName()){
+										case "Investigative":
+											roleNames.add("Sheriff");
+											roleNames.add("Psychic");
+											roleNames.add("Lookout");
+											roleNames.add("Tracker");
+											break;
+										case "Protective":
+											roleNames.add("Bodyguard");
+											roleNames.add("Doctor");
+											break;
+										case "Killing":
+											roleNames.add("Vigilante");
+											roleNames.add("Veteran");
+											break;
+										case "Necrotic":
+											roleNames.add("Medium");
+											roleNames.add("Necromancer");
+											break;
+										case "Support":
+											roleNames.add("Swapper");
+											roleNames.add("Escort");
+											roleNames.add("Admirer");
+											roleNames.add("Mayor");
+											break;
+									}
+									break;
+								case "Neutral Killer":
+									switch (category.getName()){
+										case "All":
+											roleNames.add("Serial Killer");
+											roleNames.add("Cannibal");
+											roleNames.add("Arsonist");
+											break;
+									}
+									break;
+								case "Neutral Evil":
+									switch (category.getName()){
+										case "All":
+											roleNames.add("Jester");
+											roleNames.add("Executioner");
+											break;
+									}
+									break;
+								case "Mafia":
+									switch (category.getName()){
+										case "All":
+											roleNames.add("Consort");
+											roleNames.add("Consigliere");
+											roleNames.add("Ambusher");
+											roleNames.add("Magnate");
+											roleNames.add("Framer");
+											break;
+									}
+									break;
+							}
+						}
+						
+						// Define max number of each role
+						roleMax = new ArrayList<>();
+						for (int i = 0; i < roleNames.size(); i++){
+							System.out.print("What is the maximum number of players that should have the role " + roleNames.get(i) + "?");
+							switch (faction.getName()){
+								case "Town":
+									switch (category.getName()){
+										case "Necrotic":
+											System.out.println(" (Default: limit 1)");
+											break;
+										case "Support":
+											switch (roleNames.get(i)){
+												case "Swapper":
+													System.out.println(" (Default: limit 1)");
+													break;
+												default:
+													System.out.println(" (Default: no limit)");
+													break;
+											}
+											break;
+										default:
+											System.out.println(" (Default: no limit)");
+											break;
+									}
+									break;
+								default:
+									System.out.println(" (Default: limit 1)");
+									break;
+							}
+							String in = scan.nextLine();
+							if (in.equals("")){
+								switch (faction.getName()){
+									case "Town":
+										switch (category.getName()){
+											case "Necrotic":
+												roleMax.add(i, 1);
+												break;
+											case "Support":
+												switch (roleNames.get(i)){
+													case "Swapper":
+														roleMax.add(i, 1);
+														break;
+													default:
+														roleMax.add(i, Integer.MAX_VALUE);
+														break;
+												}
+												break;
+											default:
+												roleMax.add(i, Integer.MAX_VALUE);
+												break;
+										}
+										break;
+									default:
+										roleMax.add(i, 1);
+										break;
+								}
+							} else{
+								int intIn = Integer.parseInt(in);
+								roleMax.add(i, intIn);
+							}
+						}
+						
+						category.addRoles(roleNames, roleMax);
+						
+						printGap();
+						
+						System.out.println("Role\t\tMax Number");
+						for (Role role : category.getRoles()){
+							System.out.print(role.getName() + "\t");
+							if (role.getName().length() <= 8){
+								System.out.print("\t");
+							}
+							System.out.println(role.getMaxNum());
+						}
 					}
-				}
-				
-				category.addRoles(roleNames, roleMax);
-				
-				printGap();
-				
-				System.out.println("Role\t\tMax Number");
-				for (Role role : category.getRoles()){
-					System.out.println(role.getName() + "\t");
-					if (role.getName().length() <= 8){
-						System.out.print("\t");
-					}
-					System.out.println(role.getMaxNum());
 				}
 			}
 		}
 	}
 	
+	private static void assignCategories(){
+		int factIndex = 0;
+		int catIndex = 0;
+		for (Faction f : mafiaGame.getFactions()){
+			if (!f.getName().equals("Any")){
+				for (int i = 0; i < f.getMinNum(); i++){
+					mafiaGame.getPlayers().get(factIndex).setFaction(f);
+					factIndex++;
+				}
+				for (Category c : f.getCategories()){
+					for (int i = 0; i < c.getMinNum(); i++){
+						mafiaGame.getPlayers().get(catIndex).setCategory(c);
+						catIndex++;
+					}
+				}
+				if (catIndex < factIndex){
+					for (int i = catIndex; i <= factIndex; i++){
+						Category rand = ListUtils.findCategory(f, "Random");
+						mafiaGame.getPlayers().get(catIndex).setCategory(rand);
+						catIndex++;
+					}
+				}
+			} else{
+				mafiaGame.getPlayers().get(factIndex).setFaction(f);
+			}
+		}
+	}
+	
 	private static void assignRoles(){
-		// TODO
+		Random rand = new Random();
+		for (Player p : mafiaGame.getPlayers()){
+			System.out.println(p.getName());
+			if (p.getFaction().getName().equals("Any")){ // Set faction for the Any
+				// Define weights
+				ArrayList<Double> weights = new ArrayList<Double>();
+				Boolean cont = true;
+				while(cont) {
+					System.out.println("Player " + p.getName() + " is the Any. Please enter the weights for factions. They must add up to 1");
+					for (int i = 0; i < mafiaGame.getAllowedAny().size(); i++){
+						Boolean cont2 = true;
+						while (cont2){
+							System.out.println("Please enter the weight for the faction " + mafiaGame.getAllowedAny().get(i).getName());
+							String in = scan.nextLine();
+							try{
+								double weight = Double.parseDouble(in);
+								cont2 = false;
+								weights.add(weight);
+							} catch (NumberFormatException e){
+								System.out.println("That was not a number. Please try again.");
+							}
+						}
+					}
+					double total = 0.0;
+					for(int i = 0; i < weights.size(); i++) {
+						total += weights.get(i);
+					}
+					if (total != 1.0){
+						System.err.println("Those values do not add up to 1. Please try again");
+					} else{
+						cont = false;
+					}
+				}
+				
+				double categoryIndex = rand.nextDouble();
+				double combinedTotal = 0.0;
+				int i = 0;
+				cont = true;
+				while (cont){
+					if (categoryIndex <= combinedTotal + weights.get(i)){
+						cont = false;
+						p.setFaction(mafiaGame.getAllowedAny().get(i));
+						// switch(p.getFaction())
+						p.setCategory(ListUtils.findCategory(p.getFaction(), "Random"));
+					} else{
+						combinedTotal += weights.get(i);
+						i++;
+					}
+				}
+			}
+			if (p.getCategory().getName().equals("Random")){ // Set category for the Random
+				int r = rand.nextInt(p.getFaction().getCategories().size() - 1);
+				p.setCategory(p.getFaction().getCategories().get(r));
+			}
+			
+			// Set the role randomly based on the category
+			Boolean cont = true;
+			while(cont) {
+				int role = rand.nextInt(p.getCategory().getRoles().size());
+				if (p.getCategory().getRoles().get(role).getNumCurr() < p.getCategory().getRoles().get(role).getMaxNum()){
+					p.setRole(p.getCategory().getRoles().get(role));
+					p.getRole().addNumCurr();
+					cont = false;
+				}
+			}
+		}
 	}
 	
 	private static void getDrunk(){
@@ -459,14 +590,15 @@ public class MafiaDriver{
 	}
 	
 	private static void showResults(){
+		mafiaGame.sortPlayers();
 		System.out.println("Name\t\tFaction\t\tCategory\t\tRole\t\tDrunk");
 		for (Player p : mafiaGame.getPlayers()){
 			System.out.print(p.getName() + "\t");
 			if (p.getName().length() <= 8){
 				System.out.print("\t");
 			}
-			System.out.print(p.getFaction().getFactionName() + "\t");
-			if (p.getFaction().getFactionName().length() <= 8){
+			System.out.print(p.getFaction().getName() + "\t");
+			if (p.getFaction().getName().length() <= 8){
 				System.out.print("\t");
 			}
 			System.out.print(p.getCategory().getName() + "\t");

@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class Mafia{
 	private ArrayList<Player> players;
 	private ArrayList<Faction> factions;
+	private ArrayList<Faction> allowedAny;
 	
 	/**
 	 * Constructor
@@ -21,6 +22,7 @@ public class Mafia{
 	public Mafia(){
 		players = new ArrayList<Player>();
 		factions = new ArrayList<Faction>();
+		setAllowedAny(new ArrayList<Faction>());
 	}
 	
 	/**
@@ -79,6 +81,7 @@ public class Mafia{
 		}
 	}
 	
+
 	/**
 	 * @return List of players
 	 */
@@ -123,7 +126,31 @@ public class Mafia{
 		return players.get(r.nextInt(players.size()));
 	}
 	
+	/**
+	 * @return List of Factions
+	 */
 	public ArrayList<Faction> getFactions(){
 		return factions;
+	}
+
+	/**
+	 * @return the allowedAny
+	 */
+	public ArrayList<Faction> getAllowedAny(){
+		return allowedAny;
+	}
+
+	/**
+	 * @param allowedAny the allowedAny to set
+	 */
+	public void setAllowedAny(ArrayList<Faction> allowedAny){
+		this.allowedAny = allowedAny;
+	}
+	
+	/**
+	 * Sorts players alphabetically by name
+	 */
+	public void sortPlayers(){
+		players.sort(null);
 	}
 }

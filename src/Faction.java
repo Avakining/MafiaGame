@@ -32,7 +32,7 @@ public class Faction{
 	/**
 	 * @return the factionName
 	 */
-	public String getFactionName(){
+	public String getName(){
 		return factionName;
 	}
 	

@@ -23,4 +23,32 @@ public class ListUtils{
 		}
 		return false;
 	}
+	
+	/**
+	 * @param f Faction to search
+	 * @param s Name to search for
+	 * @return Category with that name, or null if not found
+	 */
+	public static Category findCategory(Faction f, String s){
+		for (Category c : f.getCategories()){
+			if (c.getName().equals(s)){
+				return c;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * @param arr ArrayList to search
+	 * @param s Name to search for
+	 * @return Faction with that name, or null if not found
+	 */
+	public static Faction findFaction(ArrayList<Faction> arr, String s){
+		for (Faction f : arr){
+			if (f.getName().equals(s)){
+				return f;
+			}
+		}
+		return null;
+	}
 }

@@ -2,12 +2,10 @@
  * @author Celeste Partan
  */
 
-import java.util.Random;
-
 /**
  * 
  */
-public class Player{
+public class Player implements Comparable<Player>{
 	private String name;
 	private Role role;
 	private Faction faction;
@@ -85,4 +83,10 @@ public class Player{
 	public void setFaction(Faction faction){
 		this.faction = faction;
 	}
+	
+	@Override
+	public int compareTo(Player o){
+		return this.name.compareTo(o.name);
+	}
+	
 }
