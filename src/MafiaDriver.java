@@ -172,13 +172,14 @@ public class MafiaDriver{
 		ArrayList<Integer> numCategory;
 		for (int i = 0; i < mafiaGame.getFactions().size(); i++){
 			categoryNames = new ArrayList<String>();
+			scan.nextLine(); // idk why this is needed, but it is
 			System.out.print("Enter the categories in the faction " + mafiaGame.getFactions().get(i).getFactionName());
 			// Inform about defaults
 			switch (mafiaGame.getFactions().get(i).getFactionName()){
 				case "Town":
 					System.out.println(" (Default: Investigative, Protective, Killing, Necrotic, Support)");
 					break;
-				case "Neutral Killing":
+				case "Neutral Killer":
 				case "Neutral Evil":
 					System.out.println(" (Default: No categories)");
 					break;
@@ -192,7 +193,6 @@ public class MafiaDriver{
 					System.out.println();
 					break;
 			}
-			// FIXME this scan is instantly "" already for some reason
 			Boolean cont = true;
 			while (cont){
 				String in = scan.nextLine();
@@ -213,7 +213,7 @@ public class MafiaDriver{
 						categoryNames.add("Necrotic");
 						categoryNames.add("Support");
 						break;
-					case "Neutral Killing":
+					case "Neutral Killer":
 					case "Neutral Evil":
 					case "Mafia":
 					case "Any":
