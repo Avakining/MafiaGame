@@ -9,6 +9,12 @@ import java.util.Collections;
  * *
  */
 public class ListUtils{
+	/**
+	 * Determines if a given String is in an ArrayList
+	 * @param arr ArrayList
+	 * @param item String to check for
+	 * @return True if String is in Array
+	 */
 	public static boolean isItemInArray(ArrayList<String> arr, String item){
 		for (String i : arr){
 			if (i.equals(item)){
