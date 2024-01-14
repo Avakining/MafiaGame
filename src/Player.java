@@ -86,7 +86,18 @@ public class Player implements Comparable<Player>{
 	
 	@Override
 	public int compareTo(Player o){
-		return this.name.compareTo(o.name);
+		if (this.faction.getName().compareTo(o.getFaction().getName()) == 0){
+			if (this.category.getName().compareTo(o.getCategory().getName()) == 0){
+				return this.name.compareTo(o.getName());
+			} else{
+				return this.category.getName().compareTo(o.getCategory().getName());
+			}
+		} else{
+			return this.faction.getName().compareTo(o.getFaction().getName());
+		}
 	}
 	
+	public int compareToName(Player o){
+		return this.name.compareTo(o.getName());
+	}
 }

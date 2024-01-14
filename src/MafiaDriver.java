@@ -40,7 +40,14 @@ public class MafiaDriver{
 	}
 	
 	private static void printGap(){
-		System.out.println("------------------\n\n\n\n------------------");
+		for (int i = 0; i < 25; i++){
+			System.out.print("-");
+		}
+		System.out.println("\n\n\n\n\n");
+		for (int i = 0; i < 25; i++){
+			System.out.print("-");
+		}
+		System.out.println();
 	}
 	
 	private static void players(){
@@ -591,7 +598,7 @@ public class MafiaDriver{
 	
 	private static void showResults(){
 		mafiaGame.sortPlayers();
-		System.out.println("Name\t\tFaction\t\tCategory\t\tRole\t\tDrunk");
+		System.out.println("Results\nName\t\tFaction\t\tCategory\t\tRole\t\tDrunk");
 		for (Player p : mafiaGame.getPlayers()){
 			System.out.print(p.getName() + "\t");
 			if (p.getName().length() <= 8){
@@ -614,6 +621,12 @@ public class MafiaDriver{
 			} else{
 				System.out.println();
 			}
+		}
+		
+		System.out.println("Alphabetical list of players to copy+paste into #player-list:");
+		mafiaGame.sortPlayersByName();
+		for (Player p : mafiaGame.getPlayers()){
+			System.out.println(p.getName());
 		}
 	}
 }

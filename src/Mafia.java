@@ -5,6 +5,7 @@
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -152,5 +153,18 @@ public class Mafia{
 	 */
 	public void sortPlayers(){
 		players.sort(null);
+	}
+	
+	public void sortPlayersByName(){
+		Boolean cont = true;
+		while(cont) {
+			cont = false;
+			for(int i = 0; i < players.size() - 1; i++) {
+				if (players.get(i).compareToName(players.get(i + 1)) > 0){
+					cont = true;
+					Collections.swap(players, i, i + 1);
+				}
+			}
+		}
 	}
 }
