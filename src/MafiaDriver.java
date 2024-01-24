@@ -21,14 +21,41 @@ public class MafiaDriver{
 		mafiaGame = new Mafia();
 		scan = new Scanner(System.in);
 		System.out.println("Welcome to the Mafia GM Utility!\nYou will be asked to enter values. Each time this happens, type in the value requested then hit enter.\nWhen finished with that section, hit enter without typing anything.\nSome fields have defaults. They will be specified. Just hit enter as if you were finished entering information to use those defaults.");
-		players();
+		Boolean cont = true;
+		while (cont){
+			System.out.println("To read players in from a file, type \'1\'. To manually enter them, type \'2\'");
+			String in = scan.nextLine();
+			if (in.strip().equals("1")){
+				cont = false;
+				playersFromFile();
+			} else if (in.strip().equals("2")){
+				cont = false;
+				players();
+			} else{
+				System.err.println("Error: unrecognized input. Please try again");
+			}
+		}
 		printGap();
-		factions();
-		printGap();
-		categories();
-		printGap();
-		roles();
-		printGap();
+		cont = true;
+		while (cont){
+			System.out.println("To read factions, categories, and roles in from a file, type \'1\'. To manually enter them, type \'2\'");
+			String in = scan.nextLine();
+			if (in.strip().equals("1")){
+				cont = false;
+				rolesFromFile();
+			} else if (in.strip().equals("2")){
+				cont = false;
+				printGap();
+				factions();
+				printGap();
+				categories();
+				printGap();
+				roles();
+				printGap();
+			} else{
+				System.err.println("Error: unrecognized input. Please try again");
+			}
+		}
 		assignCategories();
 		printGap();
 		assignRoles();
@@ -628,5 +655,17 @@ public class MafiaDriver{
 		for (Player p : mafiaGame.getPlayers()){
 			System.out.println(p.getName());
 		}
+	}
+	
+	private static void playersFromFile(){
+		// TODO
+		System.out.println("Not Yet Implemented. Falling back to manual");
+		players();
+	}
+	
+	private static void rolesFromFile(){
+		// TODO
+		System.out.println("Not Yet Implemented. Falling back to manual");
+		players();
 	}
 }
