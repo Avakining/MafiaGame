@@ -663,6 +663,7 @@ public class MafiaDriver{
 		Scanner scanF;
 		ArrayList<String> players = new ArrayList<>();
 		File playersF = new File("players.txt");
+		System.out.println("Looking at: " + playersF.getAbsolutePath());
 		while (!playersF.exists() && !playersF.canRead()){
 			System.err.println("File is not in expected location");
 			System.out.println("Please enter the path to players.txt:");
