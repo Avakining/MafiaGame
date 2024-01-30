@@ -6,6 +6,8 @@
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * Driver class
@@ -658,9 +660,30 @@ public class MafiaDriver{
 	}
 	
 	private static void playersFromFile(){
-		// TODO
-		System.out.println("Not Yet Implemented. Falling back to manual");
-		players();
+		Scanner scanF;
+		ArrayList<String> players = new ArrayList<>();
+		File playersF = new File("players.txt");
+		while (!playersF.exists() && !playersF.canRead()){
+			System.err.println("File is not in expected location");
+			System.out.println("Please enter the path to players.txt:");
+			String in = scan.nextLine();
+			playersF = new File(in);
+		}
+		try{
+			scanF = new Scanner(playersF);
+			while (scanF.hasNextLine()){
+				players.add(scanF.nextLine());
+			}
+		} catch (FileNotFoundException e){
+			e.printStackTrace();
+		}
+		
+		// Set player list
+		mafiaGame.setPlayers(players);
+		System.out.println("Players:");
+		for (Player p : mafiaGame.getPlayers()){
+			System.out.println(p.getName());
+		}
 	}
 	
 	private static void rolesFromFile(){

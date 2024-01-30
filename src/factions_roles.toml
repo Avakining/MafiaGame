@@ -1,0 +1,43 @@
+[town]
+  min_num = 7
+  weight = 0.4 # weight for any
+  [town.investigative]
+    min_num = 1
+    weight = nan
+    [town.investigative.roles.Sheriff]
+      max_num = inf
+      weight = nan
+    [town.investigative.roles.Psychic]
+      max_num = inf
+      weight = nan
+    [town.investigative.roles.Lookout]
+      max_num = inf
+      weight = nan
+    [town.investigative.roles.Tracker]
+      max_num = inf
+      weight = nan
+  [town.protective]
+    min = 1
+    [town.protective.roles.Bodyguard]
+    [town.protective.roles.Doctor]
+  [town.killing]
+    min = 1
+    [town.killing.Vigilante]
+    [town.killing.Veteran]
+  [town.necrotic]
+    min = 1
+    [town.necrotic.roles.Medium]
+    [town.necrotic.roles.Necromancer]
+  [town.support]
+    min = 1
+    [town.support.roles.Swapper]
+
+["neutral killing"]
+  ["Neutral killing".all]
+["neutral evil"]
+  ["neutral evil".all]
+[mafia]
+  [mafia.all]
+[any]
+[drunk]
+  isDrunk = true
