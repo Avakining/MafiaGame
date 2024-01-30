@@ -1,43 +1,108 @@
-[town]
-  min_num = 7
+[Town] # faction name
+  min_num = 7 # minimum number in this faction
   weight = 0.4 # weight for any
-  [town.investigative]
-    min_num = 1
+  [Town.Investigative] # category name
+    min_num = 1 # min number in category
+    weight = nan # not yet implemented
+    [Town.Investigative.roles.Sheriff] # role name
+      max_num = inf # max number of this role
+      weight = nan # not yet implemented
+    [Town.Investigative.roles.Psychic]
+      max_num = inf
+      weight = nan
+    [Town.Investigative.roles.Lookout]
+      max_num = inf
+      weight = nan
+    [Town.Investigative.roles.Tracker]
+      max_num = inf
+      weight = nan
+  [Town.Protective]
+    min = 1
     weight = nan
-    [town.investigative.roles.Sheriff]
+    [Town.Protective.roles.Bodyguard]
       max_num = inf
       weight = nan
-    [town.investigative.roles.Psychic]
+    [Town.Protective.roles.Doctor]
       max_num = inf
       weight = nan
-    [town.investigative.roles.Lookout]
+  [Town.Killing]
+    min = 1
+    weight = nan
+    [Town.Killing.Vigilante]
       max_num = inf
       weight = nan
-    [town.investigative.roles.Tracker]
+    [Town.Killing.Veteran]
       max_num = inf
       weight = nan
-  [town.protective]
+  [Town.Necrotic]
     min = 1
-    [town.protective.roles.Bodyguard]
-    [town.protective.roles.Doctor]
-  [town.killing]
+    weight = nan
+    [Town.Necrotic.roles.Medium]
+      max_num = 1
+      weight = nan
+    [Town.Necrotic.roles.Necromancer]
+      max_num = 1
+      weight = nan
+  [Town.Support]
     min = 1
-    [town.killing.Vigilante]
-    [town.killing.Veteran]
-  [town.necrotic]
-    min = 1
-    [town.necrotic.roles.Medium]
-    [town.necrotic.roles.Necromancer]
-  [town.support]
-    min = 1
-    [town.support.roles.Swapper]
+    weight = nan
+    [Town.Support.roles.Swapper]
+      max_num = 1
+      weight = nan
+    [Town.Support.roles.Escort]
+      max_num = inf
+      weight = nan
+    [Town.Support.roles.Admirer]
+      max_num = inf
+      weight = nan
+    [Town.Support.roles.Mayor]
+      max_num = inf
+      weight = nan
 
-["neutral killing"]
-  ["Neutral killing".all]
-["neutral evil"]
-  ["neutral evil".all]
-[mafia]
-  [mafia.all]
-[any]
-[drunk]
-  isDrunk = true
+["Neutral Killing"]
+  min_num = 1
+  weight = 0
+  ["Neutral Killing".All]
+    ["Neutral Killing".All.roles."Serial Killer"]
+      max_num = 1
+      weight = nan
+    ["Neutral Killing".All.roles.Cannibal]
+      max_num = 1
+      weight = nan
+    ["Neutral Killing".All.roles.Arsonist]
+      max_num = 1
+      weight = nan
+["Neutral Evil"]
+  min_num = 1
+  weight = 0.3
+  ["Neutral Evil".All]
+    ["Neutral Evil".All.roles.Jester]
+      max_num = 1
+      weight = nan
+    ["Neutral Evil".All.roles.Executioner]
+      max_num = 1
+      weight = nan
+[Mafia]
+  min_num = 3
+  weight = 0.3
+  isHoncho = true # is there a Head Honcho?
+  [Mafia.All]
+    [Mafia.All.roles.Consort]
+      max_num = 1
+      weight = nan
+    [Mafia.All.roles.Consigliere]
+      max_num = 1
+      weight = nan
+    [Mafia.All.roles.Ambusher]
+      max_num = 1
+      weight = nan
+    [Mafia.All.roles.Magnate]
+      max_num = 1
+      weight = nan
+    [Mafia.All.roles.Framer]
+      max_num = 1
+      weight = nan
+[[Any]]
+  min_num = 1
+[[Drunk]]
+  isDrunk = true # is there a drunk?
