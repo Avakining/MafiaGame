@@ -113,9 +113,10 @@ public class Mafia{
 	/**
 	 * @param name Name of faction to add
 	 * @param num Minimum number of players in that faction
+	 * @param weight weight for "Any"
 	 */
-	public void addFaction(String name, int num){
-		factions.add(new Faction(name, num));
+	public void addFaction(String name, int num, double weight){
+		factions.add(new Faction(name, num, weight));
 	}
 	
 	/**

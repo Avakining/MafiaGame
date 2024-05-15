@@ -4,10 +4,16 @@
  */
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.tomlj.*;
+import java.nio.file.*;
 
 /**
  * Driver class
@@ -15,49 +21,19 @@ import java.io.FileNotFoundException;
 public class MafiaDriver{
 	private static Mafia mafiaGame;
 	private static Scanner scan;
+	private static Random rand;
 	
 	/**
 	 * @param args Arguments
 	 */
 	public static void main(String[] args){
+		rand = new Random();
 		mafiaGame = new Mafia();
 		scan = new Scanner(System.in);
 		System.out.println("Welcome to the Mafia GM Utility!\nYou will be asked to enter values. Each time this happens, type in the value requested then hit enter.\nWhen finished with that section, hit enter without typing anything.\nSome fields have defaults. They will be specified. Just hit enter as if you were finished entering information to use those defaults.");
-		Boolean cont = true;
-		while (cont){
-			System.out.println("To read players in from a file, type \'1\'. To manually enter them, type \'2\'");
-			String in = scan.nextLine();
-			if (in.strip().equals("1")){
-				cont = false;
-				playersFromFile();
-			} else if (in.strip().equals("2")){
-				cont = false;
-				players();
-			} else{
-				System.err.println("Error: unrecognized input. Please try again");
-			}
-		}
-		printGap();
-		cont = true;
-		while (cont){
-			System.out.println("To read factions, categories, and roles in from a file, type \'1\'. To manually enter them, type \'2\'");
-			String in = scan.nextLine();
-			if (in.strip().equals("1")){
-				cont = false;
-				rolesFromFile();
-			} else if (in.strip().equals("2")){
-				cont = false;
-				printGap();
-				factions();
-				printGap();
-				categories();
-				printGap();
-				roles();
-				printGap();
-			} else{
-				System.err.println("Error: unrecognized input. Please try again");
-			}
-		}
+		playersFromFile();
+		rolesFromFile();
+		assignFactions();
 		assignCategories();
 		printGap();
 		assignRoles();
@@ -79,241 +55,241 @@ public class MafiaDriver{
 		System.out.println();
 	}
 	
-	private static void players(){
-		// Get player list from user
-		ArrayList<String> players = new ArrayList<>();
-		System.out.println("Enter the player names:");
-		boolean cont = true;
-		while (cont){
-			String in = scan.nextLine();
-			if (in.strip().equals("")){
-				cont = false;
-			} else{
-				players.add(in);
-			}
-		}
-		
-		printGap();
-		
-		// Set player list
-		mafiaGame.setPlayers(players);
-		System.out.println("Players:");
-		for (Player p : mafiaGame.getPlayers()){
-			System.out.println(p.getName());
-		}
-	}
-	
-	private static void factions(){
-		// Get factions
-		ArrayList<String> factionNames = new ArrayList<>();
-		System.out.println("Enter the factions (Defaults: Town, Neutral Killer, Neutral Evil, Mafia): ");
-		Boolean cont = true;
-		while (cont){
-			String in = scan.nextLine();
-			if (in.strip().equals("")){
-				cont = false;
-			} else{
-				factionNames.add(in);
-			}
-		}
-		
-		if (factionNames.size() == 0){
-			factionNames.add("Town");
-			factionNames.add("Neutral Killer");
-			factionNames.add("Neutral Evil");
-			factionNames.add("Mafia");
-		}
-		
-		printGap();
-		
-		System.out.println("Added factions:");
-		for (String s : factionNames){
-			System.out.println(s);
-		}
-		ArrayList<String> anyFactions = new ArrayList<>();
-		System.out.println("Do you want an Any category? (Y/n)");
-		cont = true;
-		while (cont){
-			String in = scan.nextLine();
-			if (in.strip().toUpperCase().equals("Y")){
-				System.out.println("Which roles should \"Any\" be able to become? (Default: Town, Neutral Evil, Mafia)");
-				boolean cont2 = true;
-				while (cont2){
-					in = scan.nextLine();
-					if (in.strip().equals("")){
-						cont2 = false;
-						anyFactions.add("Town");
-						anyFactions.add("Neutral Evil");
-						anyFactions.add("Mafia");
-					} else if (ListUtils.isItemInArray(factionNames, in)){
-						anyFactions.add(in);
-					} else{
-						System.out.println("That is not an added faction. Please try again");
-					}
-				}
-				factionNames.add("Any");
-				cont = false;
-			} else if (in.strip().toUpperCase().equals("N")){
-				cont = false;
-			} else{
-				System.out.println("Please enter Y/n");
-			}
-		}
-		
-		ArrayList<Integer> numFaction = new ArrayList<>(factionNames.size());
-		
-		// for (String f : factionNames){
-		// System.out.println(f);
-		// }
-		
-		boolean addsUp = false;
-		while (!addsUp){
-			int total = 0;
-			for (int i = 0; i < factionNames.size(); i++){
-				System.out.println("How many members should there be of faction " + factionNames.get(i) + "?");
-				int in = scan.nextInt();
-				if (in >= 0){
-					numFaction.add(i, in);
-					total += in;
+	/*private static void players(){
+			// Get player list from user
+			ArrayList<String> players = new ArrayList<>();
+			System.out.println("Enter the player names:");
+			boolean cont = true;
+			while (cont){
+				String in = scan.nextLine();
+				if (in.strip().equals("")){
+					cont = false;
 				} else{
-					i--;
+					players.add(in);
 				}
 			}
-			if (total == mafiaGame.getPlayers().size()){
-				addsUp = true;
-			} else{
-				System.out.println("Error: those values do not add up to the total number of players");
+			
+			printGap();
+			
+			// Set player list
+			mafiaGame.setPlayers(players);
+			System.out.println("Players:");
+			for (Player p : mafiaGame.getPlayers()){
+				System.out.println(p.getName());
 			}
-		}
+		}*/
 		
-		for (int i = 0; i < factionNames.size(); i++){
-			mafiaGame.addFaction(factionNames.get(i), numFaction.get(i));
-		}
-		
-		ArrayList<Faction> anyFactionArr = new ArrayList<Faction>();
-		for (String s : anyFactions){
-			anyFactionArr.add(ListUtils.findFaction(mafiaGame.getFactions(), s));
-		}
-		mafiaGame.setAllowedAny(anyFactionArr);
-		
-		printGap();
-		
-		System.out.println("Factions\t\tNumber of Players");
-		for (Faction element : mafiaGame.getFactions()){
-			System.out.print(element.getName() + "\t");
-			if (element.getName().length() <= 8){
-				System.out.print("\t");
-			}
-			System.out.println(element.getMinNum());
-		}
-	}
-	
-	private static void categories(){
-		// Define categories
-		System.out.println("Next, it's time to define the categories within each faction. Don't set \"Random\", as they will be any leftover after the number of each is set.");
-		ArrayList<String> categoryNames;
-		ArrayList<Integer> numCategory;
-		for (int i = 0; i < mafiaGame.getFactions().size(); i++){
-			categoryNames = new ArrayList<String>();
-			scan.nextLine(); // idk why this is needed, but it is
-			System.out.print("Enter the categories in the faction " + mafiaGame.getFactions().get(i).getName());
-			// Inform about defaults
-			switch (mafiaGame.getFactions().get(i).getName()){
-				case "Town":
-					System.out.println(" (Default: Investigative, Protective, Killing, Necrotic, Support)");
-					break;
-				case "Neutral Killer":
-				case "Neutral Evil":
-					System.out.println(" (Default: No categories)");
-					break;
-				case "Mafia":
-					System.out.println(" (Default: No categories)");
-					break;
-				case "Any":
-					System.out.println(" (Default: No categories)");
-					break;
-				default:
-					System.out.println();
-					break;
-			}
+	/*private static void factions(){
+			// Get factions
+			ArrayList<String> factionNames = new ArrayList<>();
+			System.out.println("Enter the factions (Defaults: Town, Neutral Killer, Neutral Evil, Mafia): ");
 			Boolean cont = true;
 			while (cont){
 				String in = scan.nextLine();
 				if (in.strip().equals("")){
 					cont = false;
 				} else{
-					categoryNames.add(in);
+					factionNames.add(in);
 				}
 			}
 			
-			// Set defaults
-			if (categoryNames.size() == 0){
-				switch (mafiaGame.getFactions().get(i).getName()){
-					case "Town":
-						categoryNames.add("Investigative");
-						categoryNames.add("Protective");
-						categoryNames.add("Killing");
-						categoryNames.add("Necrotic");
-						categoryNames.add("Support");
-						break;
-					case "Neutral Killer":
-					case "Neutral Evil":
-					case "Mafia":
-					case "Any":
-					default:
-						categoryNames.add("All");
-						break;
-				}
-			}
-			
-			
-
-			// Get numbers
-			numCategory = new ArrayList<Integer>();
-			
-			Boolean addsUp = false;
-			while (!addsUp){
-				int total = 0;
-				for (int j = 0; j < categoryNames.size(); j++){
-					System.out.println("What is the minumum number of players that should be in the category " + categoryNames.get(j) + "?");
-					int in = scan.nextInt();
-					if (in >= 0){
-						numCategory.add(in);
-						total += in;
-					} else{
-						j--;
-					}
-				}
-				if (total <= mafiaGame.getFactions().get(i).getMinNum()){
-					addsUp = true;
-				} else{
-					System.out.println("Error: those values are greater than the number of players in this faction");
-				}
-			}
-			
-			categoryNames.add("Random");
-			numCategory.add(0);
-			
-			for (int j = 0; j < categoryNames.size(); j++){
-				mafiaGame.getFactions().get(i).addCategory(categoryNames.get(j), numCategory.get(j));
+			if (factionNames.size() == 0){
+				factionNames.add("Town");
+				factionNames.add("Neutral Killer");
+				factionNames.add("Neutral Evil");
+				factionNames.add("Mafia");
 			}
 			
 			printGap();
 			
-			// System.out.println("Number of categories in the faction " + mafiaGame.getFactions().get(i).getName() + ": " + mafiaGame.getFactions().get(i).getCategories().size());
+			System.out.println("Added factions:");
+			for (String s : factionNames){
+				System.out.println(s);
+			}
+			ArrayList<String> anyFactions = new ArrayList<>();
+			System.out.println("Do you want an Any category? (Y/n)");
+			cont = true;
+			while (cont){
+				String in = scan.nextLine();
+				if (in.strip().toUpperCase().equals("Y")){
+					System.out.println("Which roles should \"Any\" be able to become? (Default: Town, Neutral Evil, Mafia)");
+					boolean cont2 = true;
+					while (cont2){
+						in = scan.nextLine();
+						if (in.strip().equals("")){
+							cont2 = false;
+							anyFactions.add("Town");
+							anyFactions.add("Neutral Evil");
+							anyFactions.add("Mafia");
+						} else if (ListUtils.isItemInArray(factionNames, in)){
+							anyFactions.add(in);
+						} else{
+							System.out.println("That is not an added faction. Please try again");
+						}
+					}
+					factionNames.add("Any");
+					cont = false;
+				} else if (in.strip().toUpperCase().equals("N")){
+					cont = false;
+				} else{
+					System.out.println("Please enter Y/n");
+				}
+			}
 			
-			System.out.println("Category\t\tNumber of Players");
-			for (Category element : mafiaGame.getFactions().get(i).getCategories()){
+			ArrayList<Integer> numFaction = new ArrayList<>(factionNames.size());
+			
+			// for (String f : factionNames){
+			// System.out.println(f);
+			// }
+			
+			boolean addsUp = false;
+			while (!addsUp){
+				int total = 0;
+				for (int i = 0; i < factionNames.size(); i++){
+					System.out.println("How many members should there be of faction " + factionNames.get(i) + "?");
+					int in = scan.nextInt();
+					if (in >= 0){
+						numFaction.add(i, in);
+						total += in;
+					} else{
+						i--;
+					}
+				}
+				if (total == mafiaGame.getPlayers().size()){
+					addsUp = true;
+				} else{
+					System.out.println("Error: those values do not add up to the total number of players");
+				}
+			}
+			
+			for (int i = 0; i < factionNames.size(); i++){
+				mafiaGame.addFaction(factionNames.get(i), numFaction.get(i));
+			}
+			
+			ArrayList<Faction> anyFactionArr = new ArrayList<Faction>();
+			for (String s : anyFactions){
+				anyFactionArr.add(ListUtils.findFaction(mafiaGame.getFactions(), s));
+			}
+			mafiaGame.setAllowedAny(anyFactionArr);
+			
+			printGap();
+			
+			System.out.println("Factions\t\tNumber of Players");
+			for (Faction element : mafiaGame.getFactions()){
 				System.out.print(element.getName() + "\t");
 				if (element.getName().length() <= 8){
 					System.out.print("\t");
 				}
 				System.out.println(element.getMinNum());
 			}
-		}
-	}
+		}*/
+		
+	/*private static void categories(){
+			// Define categories
+			System.out.println("Next, it's time to define the categories within each faction. Don't set \"Random\", as they will be any leftover after the number of each is set.");
+			ArrayList<String> categoryNames;
+			ArrayList<Integer> numCategory;
+			for (int i = 0; i < mafiaGame.getFactions().size(); i++){
+				categoryNames = new ArrayList<String>();
+				scan.nextLine(); // idk why this is needed, but it is
+				System.out.print("Enter the categories in the faction " + mafiaGame.getFactions().get(i).getName());
+				// Inform about defaults
+				switch (mafiaGame.getFactions().get(i).getName()){
+					case "Town":
+						System.out.println(" (Default: Investigative, Protective, Killing, Necrotic, Support)");
+						break;
+					case "Neutral Killer":
+					case "Neutral Evil":
+						System.out.println(" (Default: No categories)");
+						break;
+					case "Mafia":
+						System.out.println(" (Default: No categories)");
+						break;
+					case "Any":
+						System.out.println(" (Default: No categories)");
+						break;
+					default:
+						System.out.println();
+						break;
+				}
+				Boolean cont = true;
+				while (cont){
+					String in = scan.nextLine();
+					if (in.strip().equals("")){
+						cont = false;
+					} else{
+						categoryNames.add(in);
+					}
+				}
+				
+				// Set defaults
+				if (categoryNames.size() == 0){
+					switch (mafiaGame.getFactions().get(i).getName()){
+						case "Town":
+							categoryNames.add("Investigative");
+							categoryNames.add("Protective");
+							categoryNames.add("Killing");
+							categoryNames.add("Necrotic");
+							categoryNames.add("Support");
+							break;
+						case "Neutral Killer":
+						case "Neutral Evil":
+						case "Mafia":
+						case "Any":
+						default:
+							categoryNames.add("All");
+							break;
+					}
+				}
+				
+				
 	
-	private static void roles(){
+				// Get numbers
+				numCategory = new ArrayList<Integer>();
+				
+				Boolean addsUp = false;
+				while (!addsUp){
+					int total = 0;
+					for (int j = 0; j < categoryNames.size(); j++){
+						System.out.println("What is the minumum number of players that should be in the category " + categoryNames.get(j) + "?");
+						int in = scan.nextInt();
+						if (in >= 0){
+							numCategory.add(in);
+							total += in;
+						} else{
+							j--;
+						}
+					}
+					if (total <= mafiaGame.getFactions().get(i).getMinNum()){
+						addsUp = true;
+					} else{
+						System.out.println("Error: those values are greater than the number of players in this faction");
+					}
+				}
+				
+				categoryNames.add("Random");
+				numCategory.add(0);
+				
+				for (int j = 0; j < categoryNames.size(); j++){
+					mafiaGame.getFactions().get(i).addCategory(categoryNames.get(j), numCategory.get(j));
+				}
+				
+				printGap();
+				
+				// System.out.println("Number of categories in the faction " + mafiaGame.getFactions().get(i).getName() + ": " + mafiaGame.getFactions().get(i).getCategories().size());
+				
+				System.out.println("Category\t\tNumber of Players");
+				for (Category element : mafiaGame.getFactions().get(i).getCategories()){
+					System.out.print(element.getName() + "\t");
+					if (element.getName().length() <= 8){
+						System.out.print("\t");
+					}
+					System.out.println(element.getMinNum());
+				}
+			}
+		}*/
+		
+	/*private static void roles(){
 		// Define roles
 		System.out.println("Next, it's time to define the roles within each category.");
 		ArrayList<String> roleNames;
@@ -518,103 +494,42 @@ public class MafiaDriver{
 				}
 			}
 		}
+	}*/
+	
+	private static void assignFactions(){
+		int playersAssigned = 0;
+		for (Faction f : mafiaGame.getFactions()){
+			for (int i = 0; i < f.getMinNum(); i++){
+				mafiaGame.getPlayers().get(playersAssigned).setFaction(f);
+				playersAssigned++;
+			}
+		}
+		while (playersAssigned < mafiaGame.getPlayers().size()){
+			double weightSum = 0;
+			double randVal = rand.nextDouble();
+			for(Faction f: mafiaGame.getFactions()) {
+				if (randVal > weightSum){
+					randVal += f.getWeight();
+				} else{
+					mafiaGame.getPlayers().get(playersAssigned).setFaction(f);
+					playersAssigned++;
+				}
+			}
+		}
+		printGap();
+		for (Player p : mafiaGame.getPlayers()){
+			System.out.println(p.getName() + "\t\t" + p.getFaction().getName());
+		}
 	}
 	
 	private static void assignCategories(){
-		int factIndex = 0;
-		int catIndex = 0;
-		for (Faction f : mafiaGame.getFactions()){
-			if (!f.getName().equals("Any")){
-				for (int i = 0; i < f.getMinNum(); i++){
-					mafiaGame.getPlayers().get(factIndex).setFaction(f);
-					factIndex++;
-				}
-				for (Category c : f.getCategories()){
-					for (int i = 0; i < c.getMinNum(); i++){
-						mafiaGame.getPlayers().get(catIndex).setCategory(c);
-						catIndex++;
-					}
-				}
-				if (catIndex < factIndex){
-					for (int i = catIndex; i <= factIndex; i++){
-						Category rand = ListUtils.findCategory(f, "Random");
-						mafiaGame.getPlayers().get(catIndex).setCategory(rand);
-						catIndex++;
-					}
-				}
-			} else{
-				mafiaGame.getPlayers().get(factIndex).setFaction(f);
-			}
+		for (Player p : mafiaGame.getPlayers()){
+			
 		}
 	}
 	
 	private static void assignRoles(){
-		Random rand = new Random();
-		for (Player p : mafiaGame.getPlayers()){
-			System.out.println(p.getName());
-			if (p.getFaction().getName().equals("Any")){ // Set faction for the Any
-				// Define weights
-				ArrayList<Double> weights = new ArrayList<Double>();
-				Boolean cont = true;
-				while(cont) {
-					System.out.println("Player " + p.getName() + " is the Any. Please enter the weights for factions. They must add up to 1");
-					for (int i = 0; i < mafiaGame.getAllowedAny().size(); i++){
-						Boolean cont2 = true;
-						while (cont2){
-							System.out.println("Please enter the weight for the faction " + mafiaGame.getAllowedAny().get(i).getName());
-							String in = scan.nextLine();
-							try{
-								double weight = Double.parseDouble(in);
-								cont2 = false;
-								weights.add(weight);
-							} catch (NumberFormatException e){
-								System.out.println("That was not a number. Please try again.");
-							}
-						}
-					}
-					double total = 0.0;
-					for(int i = 0; i < weights.size(); i++) {
-						total += weights.get(i);
-					}
-					if (total != 1.0){
-						System.err.println("Those values do not add up to 1. Please try again");
-					} else{
-						cont = false;
-					}
-				}
-				
-				double categoryIndex = rand.nextDouble();
-				double combinedTotal = 0.0;
-				int i = 0;
-				cont = true;
-				while (cont){
-					if (categoryIndex <= combinedTotal + weights.get(i)){
-						cont = false;
-						p.setFaction(mafiaGame.getAllowedAny().get(i));
-						// switch(p.getFaction())
-						p.setCategory(ListUtils.findCategory(p.getFaction(), "Random"));
-					} else{
-						combinedTotal += weights.get(i);
-						i++;
-					}
-				}
-			}
-			if (p.getCategory().getName().equals("Random")){ // Set category for the Random
-				int r = rand.nextInt(p.getFaction().getCategories().size() - 1);
-				p.setCategory(p.getFaction().getCategories().get(r));
-			}
-			
-			// Set the role randomly based on the category
-			Boolean cont = true;
-			while(cont) {
-				int role = rand.nextInt(p.getCategory().getRoles().size());
-				if (p.getCategory().getRoles().get(role).getNumCurr() < p.getCategory().getRoles().get(role).getMaxNum()){
-					p.setRole(p.getCategory().getRoles().get(role));
-					p.getRole().addNumCurr();
-					cont = false;
-				}
-			}
-		}
+		
 	}
 	
 	private static void getDrunk(){
@@ -662,7 +577,7 @@ public class MafiaDriver{
 	private static void playersFromFile(){
 		Scanner scanF;
 		ArrayList<String> players = new ArrayList<>();
-		File playersF = new File("players.txt");
+		File playersF = new File("src/players.txt");
 		System.out.println("Looking at: " + playersF.getAbsolutePath());
 		while (!playersF.exists() && !playersF.canRead()){
 			System.err.println("File is not in expected location");
@@ -675,12 +590,12 @@ public class MafiaDriver{
 			while (scanF.hasNextLine()){
 				players.add(scanF.nextLine());
 			}
-		} catch (FileNotFoundException e){
+		} catch (FileNotFoundException e){ // this should never happen
 			e.printStackTrace();
 		}
 		
 		// Set player list
-		mafiaGame.setPlayers(players);
+		mafiaGame.setPlayers(players); // this also shuffles the player list
 		System.out.println("Players:");
 		for (Player p : mafiaGame.getPlayers()){
 			System.out.println(p.getName());
@@ -688,8 +603,26 @@ public class MafiaDriver{
 	}
 	
 	private static void rolesFromFile(){
-		// TODO
-		System.out.println("Not Yet Implemented. Falling back to manual");
-		players();
+		Path source = Paths.get("src/factions_roles.toml");
+		TomlParseResult result = null;
+		while (!source.toFile().exists() && !source.toFile().canRead()){
+			System.err.println("File is not in expected location");
+			System.out.println("Please enter the path to factions_roles.toml:");
+			String in = scan.nextLine();
+			source = Paths.get(in);
+		}
+		try{
+			result = Toml.parse(source);
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+		result.errors().forEach(error -> System.err.println(error.toString()));
+		Set<String> factionsString = result.keySet();
+		if (factionsString.contains("Drunk")){
+			factionsString.remove("Drunk");
+		}
+		for (String s : factionsString){
+			mafiaGame.addFaction(s, result.getDouble(s + ".min_num").intValue(), result.getDouble(s + ".weight"));
+		}
 	}
 }
