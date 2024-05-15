@@ -1,8 +1,8 @@
 [Town] # faction name
-  min_num = 7 # minimum number in this faction
+  min_num = 7.0 # minimum number in this faction
   weight = 0.4 # weight for any
   [Town.Investigative] # category name
-    min_num = 1 # min number in category
+    min_num = 1.0 # min number in category
     weight = nan # not yet implemented
     [Town.Investigative.roles.Sheriff] # role name
       max_num = inf # max number of this role
@@ -17,7 +17,7 @@
       max_num = inf
       weight = nan
   [Town.Protective]
-    min = 1
+    min = 1.0
     weight = nan
     [Town.Protective.roles.Bodyguard]
       max_num = inf
@@ -26,7 +26,7 @@
       max_num = inf
       weight = nan
   [Town.Killing]
-    min = 1
+    min = 1.0
     weight = nan
     [Town.Killing.Vigilante]
       max_num = inf
@@ -35,19 +35,19 @@
       max_num = inf
       weight = nan
   [Town.Necrotic]
-    min = 1
+    min = 1.0
     weight = nan
     [Town.Necrotic.roles.Medium]
-      max_num = 1
+      max_num = 1.0
       weight = nan
     [Town.Necrotic.roles.Necromancer]
-      max_num = 1
+      max_num = 1.0
       weight = nan
   [Town.Support]
-    min = 1
+    min = 1.0
     weight = nan
     [Town.Support.roles.Swapper]
-      max_num = 1
+      max_num = 1.0
       weight = nan
     [Town.Support.roles.Escort]
       max_num = inf
@@ -60,49 +60,47 @@
       weight = nan
 
 ["Neutral Killing"]
-  min_num = 1
-  weight = 0
+  min_num = 1.0
+  weight = 0.0
   ["Neutral Killing".All]
     ["Neutral Killing".All.roles."Serial Killer"]
-      max_num = 1
+      max_num = 1.0
       weight = nan
     ["Neutral Killing".All.roles.Cannibal]
-      max_num = 1
+      max_num = 1.0
       weight = nan
     ["Neutral Killing".All.roles.Arsonist]
-      max_num = 1
+      max_num = 1.0
       weight = nan
 ["Neutral Evil"]
-  min_num = 1
+  min_num = 1.0
   weight = 0.3
   ["Neutral Evil".All]
     ["Neutral Evil".All.roles.Jester]
-      max_num = 1
+      max_num = 1.0
       weight = nan
     ["Neutral Evil".All.roles.Executioner]
-      max_num = 1
+      max_num = 1.0
       weight = nan
 [Mafia]
-  min_num = 3
+  min_num = 3.0
   weight = 0.3
   isHoncho = true # is there a Head Honcho?
   [Mafia.All]
     [Mafia.All.roles.Consort]
-      max_num = 1
+      max_num = 1.0
       weight = nan
     [Mafia.All.roles.Consigliere]
-      max_num = 1
+      max_num = 1.0
       weight = nan
     [Mafia.All.roles.Ambusher]
-      max_num = 1
+      max_num = 1.0
       weight = nan
     [Mafia.All.roles.Magnate]
-      max_num = 1
+      max_num = 1.0
       weight = nan
     [Mafia.All.roles.Framer]
-      max_num = 1
+      max_num = 1.0
       weight = nan
-[[Any]]
-  min_num = 1
 [[Drunk]]
   isDrunk = true # is there a drunk?
