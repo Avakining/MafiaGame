@@ -1,7 +1,7 @@
-**TOWN ()**
+**TOWN (6)**
 *The town wins when all mafia and neutral killers are dead.*
 ---
-**Town Investigative ()**
+**Town Investigative (1)**
 *Sheriff*
 Each night, the Sheriff can choose a player to investigate. The Sheriff will learn if that player is good or evil.
 
@@ -14,7 +14,7 @@ Each night, the Lookout can choose a player to stake-out. The Lookout will recei
 *Tracker*
 Each night, the Tracker can choose a player to track. The Tracker will see each player they visit.
 
-**Town Protective ()**
+**Town Protective (1)**
 *Bodyguard*
 Each night, the Bodyguard can choose a player to guard, granting them powerful defence. If that player is attacked, the bodyguard will be dealt a basic attack and the bodyguard will deal a basic attack to the attacker. The bodyguard cannot guard themselves.
 
@@ -28,7 +28,7 @@ The Vigilante have three bullets. At night, the Vigilante may use one bullet to 
 *Veteran*
 Three times per game, the Veteran may choose to alert. While alerted, the Veteran has powerful defence and any player who visits the Veteran is dealt a powerful attack. Cannot be role-blocked.
 
-**Town Necrotic ()**
+**Town Necrotic (1)**
 *Medium*
 At night, the Medium has access to the dead chat. Cannot be role-blocked. Unique role.
 
@@ -48,15 +48,15 @@ During the day, if the Admirer does not currently have a lover, they may choose 
 *Mayor*
 Once per game, during the day, the Mayor may publicly reveal themself as the mayor, receiving the <@&1154246678480687184> role. After this, the Mayor's vote counts for 3 normal votes. Cannot be role-blocked. Unique role.
 
-**Random Town ()**
+**Random Town (3)**
 Random town will be assigned a random role from the town list.
 ---
 ---
 
-**NEUTRAL ()**
+**NEUTRAL (1)**
 
 ---
-**Neutral Killer ()**
+~~**Neutral Killer ()**
 *The neutral killer wins when all town, mafia, and true neutral are dead.*
 
 *Serial Killer*
@@ -66,9 +66,9 @@ Each night, the Serial Killer may deal a basic attack to a player. If the Serial
 Each night, the Cannibal may eat another player, dealing them a basic attack. If that player is killed, the Cannibal gains that player's night abilities until the next time they successfully use this ability. If the Cannibal successfully eats someone, they must wait a night before using this ability again. The Cannibal does not suffer from guilt if they use the vigilante's power. The Cannibal may choose to forgo using a night ability. Has basic defence at night.
 
 *Arsonist*
-Each night, the Arsonist either chooses a player to douse or chooses to ignite. If the Arsonist chooses to ignite, all doused players are dealt an unstoppable attack. The Arsonist is notified if they accidentally douse themselves, and can forgo their night action to un-douse themselves. Cannot be role-blocked. Has basic defence at night.
+Each night, the Arsonist either chooses a player to douse or chooses to ignite. If the Arsonist chooses to ignite, all doused players are dealt an unstoppable attack. The Arsonist is notified if they accidentally douse themselves, and can forgo their night action to un-douse themselves. Cannot be role-blocked. Has basic defence at night.~~
 
-**Neutral Evil ()**
+**Neutral Evil (1)**
 *Jester*
 The Jester wins if they are executed during the day. If the Jester wins, they may haunt a player who voted for them or abstained from the vote, dealing an unstoppable attack to that player. Cannot be role-blocked. The Jester has powerful defence during the first night of the game.
 
@@ -77,7 +77,7 @@ The Executioner is given a random target at the beginning of the game. The Execu
 ---
 ---
 
-**MAFIA ()**
+**MAFIA (2)**
 *The Mafia wins when all town, neutral killers, and true neutral are dead.*
 
 *Each night, one member of the Mafia chooses a player to deal a basic attack to, while also performing their normal night action. All Mafia roles are unique.*
