@@ -12,6 +12,7 @@ public class Category{
 	private String name;
 	private int minNum;
 	private HashSet<Role> roles;
+	private ArrayList<Player> players;
 	
 	/**
 	 * Constructor
@@ -22,6 +23,7 @@ public class Category{
 		this.name = name;
 		this.minNum = minNum;
 		this.roles = new HashSet<Role>();
+		this.players = new ArrayList<Player>();
 	}
 	
 	/**
@@ -80,5 +82,19 @@ public class Category{
 	 */
 	public int getMinNum(){
 		return minNum;
+	}
+	
+	/**
+	 * @param p Player to be added
+	 */
+	public void addPlayer(Player p){
+		players.add(p);
+	}
+	
+	/**
+	 * @return list of Players
+	 */
+	public ArrayList<Player> getPlayers(){
+		return players;
 	}
 }

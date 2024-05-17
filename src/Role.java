@@ -2,6 +2,8 @@
  * @author Celeste Partan
  */
 
+import java.util.ArrayList;
+
 /**
  * 
  */
@@ -9,6 +11,7 @@ public class Role{
 	private int maxNum;
 	private String name;
 	private int numCurr;
+	private ArrayList<Player> players;
 	
 	/**
 	 * Constructor
@@ -19,6 +22,7 @@ public class Role{
 		this.name = name;
 		this.maxNum = maxNum;
 		numCurr = 0;
+		this.players = new ArrayList<Player>();
 	}
 	
 	/**
@@ -57,4 +61,17 @@ public class Role{
 		this.numCurr++;
 	}
 	
+	/**
+	 * @param p Player to be added
+	 */
+	public void addPlayer(Player p){
+		players.add(p);
+	}
+	
+	/**
+	 * @return list of Players
+	 */
+	public ArrayList<Player> getPlayers(){
+		return players;
+	}
 }

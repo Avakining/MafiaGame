@@ -4,7 +4,6 @@
  */
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
@@ -30,12 +29,12 @@ public class MafiaDriver{
 		rand = new Random();
 		mafiaGame = new Mafia();
 		scan = new Scanner(System.in);
-		System.out.println("Welcome to the Mafia GM Utility!\nYou will be asked to enter values. Each time this happens, type in the value requested then hit enter.\nWhen finished with that section, hit enter without typing anything.\nSome fields have defaults. They will be specified. Just hit enter as if you were finished entering information to use those defaults.");
+		System.out.println("Welcome to the Mafia GM Utility!\nYou may be asked to enter values. Each time this happens, type in the value requested then hit enter.");
 		playersFromFile();
+		// printGap();
 		rolesFromFile();
 		assignFactions();
 		assignCategories();
-		printGap();
 		assignRoles();
 		printGap();
 		getDrunk();
@@ -516,20 +515,49 @@ public class MafiaDriver{
 				}
 			}
 		}
-		printGap();
-		for (Player p : mafiaGame.getPlayers()){
-			System.out.println(p.getName() + "\t\t" + p.getFaction().getName());
-		}
+		// printGap();
+		// for (Player p : mafiaGame.getPlayers()){
+		// System.out.println(p.getName() + "\t\t" + p.getFaction().getName());
+		// }
 	}
 	
 	private static void assignCategories(){
-		for (Player p : mafiaGame.getPlayers()){
-			
+		int playersAssigned;
+		for (Faction f : mafiaGame.getFactions()){
+			playersAssigned = 0;
+			for (Category c : f.getCategories()){
+				for (int i = 0; i < c.getMinNum(); i++){
+					f.getPlayers().get(playersAssigned).setCategory(c);
+					playersAssigned++;
+				}
+			}
+			while (playersAssigned < f.getPlayers().size()){
+				// System.out.println("Faction: " + f.getName() + "\tCategories: " + f.getCategories().size());
+				int randVal = rand.nextInt(f.getCategories().size());
+				f.getPlayers().get(playersAssigned).setCategory(f.getCategories().get(randVal));
+				playersAssigned++;
+			}
 		}
 	}
 	
 	private static void assignRoles(){
-		
+		int loop;
+		for(Player p : mafiaGame.getPlayers()) {
+			loop = 0;
+			while (p.getRole() == null){
+				int randVal = rand.nextInt(p.getCategory().getRoles().size());
+				if (p.getCategory().getRoles().get(randVal).getPlayers().size() < p.getCategory().getRoles().get(randVal).getMaxNum()){ // make sure there's room in the role
+					p.setRole(p.getCategory().getRoles().get(randVal));
+				}
+				loop++;
+				if (loop > 100){ // check the category is full
+					System.err.println("Player " + p.getName() + " is in category " + p.getCategory().getName() + ". All the roles in that category are full. This should be rare.");
+					randVal = rand.nextInt(p.getFaction().getCategories().size());
+					p.setCategory(p.getFaction().getCategories().get(randVal)); // assign a new category
+					loop = 0;
+				}
+			}
+		}
 	}
 	
 	private static void getDrunk(){
@@ -542,7 +570,7 @@ public class MafiaDriver{
 	
 	private static void showResults(){
 		mafiaGame.sortPlayers();
-		System.out.println("Results\nName\t\tFaction\t\tCategory\t\tRole\t\tDrunk");
+		System.out.println("Results\nName\t\tFaction\t\tCategory\t\tRole\t\tExtra");
 		for (Player p : mafiaGame.getPlayers()){
 			System.out.print(p.getName() + "\t");
 			if (p.getName().length() <= 8){
@@ -561,10 +589,19 @@ public class MafiaDriver{
 				if (p.getRole().getName().length() <= 8){
 					System.out.print("\t");
 				}
-				System.out.println("\tDrunk");
-			} else{
-				System.out.println();
+				System.out.print("\tDrunk\t");
 			}
+			if (p.getRole().getName().equals("Executioner")){ // set exe target
+				boolean cont = true;
+				while (cont){
+					int randVal = rand.nextInt(mafiaGame.getPlayers().size());
+					if (!(mafiaGame.getPlayers().get(randVal).equals(p))){
+						System.out.print("\tTarget: " + mafiaGame.getPlayers().get(randVal).getName());
+						cont = false;
+					}
+				}
+			}
+			System.out.println();
 		}
 		
 		System.out.println("Alphabetical list of players to copy+paste into #player-list:");
@@ -621,8 +658,37 @@ public class MafiaDriver{
 		if (factionsString.contains("Drunk")){
 			factionsString.remove("Drunk");
 		}
-		for (String s : factionsString){
-			mafiaGame.addFaction(s, result.getDouble(s + ".min_num").intValue(), result.getDouble(s + ".weight"));
+		
+		int factions = 0;
+		for (String f : factionsString){
+			int categories = 0;
+			// System.out.println(f);
+			mafiaGame.addFaction(f, result.getDouble(f + ".min_num").intValue(), result.getDouble(f + ".weight"));
+			Set<String> categoryString = result.getTable(f).keySet();
+			if (categoryString.contains("min_num")){
+				categoryString.remove("min_num");
+			}
+			if (categoryString.contains("weight")){
+				categoryString.remove("weight");
+			}
+			if (categoryString.contains("isHoncho")){
+				categoryString.remove("isHoncho");
+			}
+			for(String c : categoryString) {
+				// System.out.println(c);
+				mafiaGame.getFactions().get(factions).addCategory(c, result.getDouble(f + "." + c + ".min_num").intValue());
+				
+				Set<String> roleString = result.getTable(f + "." + c).keySet();
+				if (roleString.contains("min_num")){
+					roleString.remove("min_num");
+				}
+				for(String r : roleString) {
+					// System.out.println(r);
+					mafiaGame.getFactions().get(factions).getCategories().get(categories).addRole(r, result.getDouble(f + "." + c + "." + r + ".max_num").intValue());
+				}
+				categories++;
+			}
+			factions++;
 		}
 	}
 }

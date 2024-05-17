@@ -12,14 +12,25 @@ public class Faction{
 	private String factionName;
 	private ArrayList<Category> categories;
 	private double weight;
+	private ArrayList<Player> players;
 	
+	/**
+	 * @param name Faction name
+	 * @param num minimum number
+	 * @param weight weight for Any
+	 */
 	public Faction(String name, int num, double weight){
 		minNum = num;
 		this.factionName = name;
 		categories = new ArrayList<Category>();
 		this.weight = weight;
+		this.players = new ArrayList<Player>();
 	}
 	
+	/**
+	 * @param name Category name
+	 * @param num minimum number
+	 */
 	public void addCategory(String name, int num){
 		categories.add(new Category(name, num));
 	}
@@ -38,6 +49,9 @@ public class Faction{
 		return factionName;
 	}
 	
+	/**
+	 * @return categories in this faction
+	 */
 	public ArrayList<Category> getCategories(){
 		return categories;
 	}
@@ -47,5 +61,19 @@ public class Faction{
 	 */
 	public double getWeight(){
 		return weight;
+	}
+	
+	/**
+	 * @param p Player to be added
+	 */
+	public void addPlayer(Player p){
+		players.add(p);
+	}
+	
+	/**
+	 * @return list of Players
+	 */
+	public ArrayList<Player> getPlayers(){
+		return players;
 	}
 }

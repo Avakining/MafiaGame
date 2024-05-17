@@ -2,11 +2,8 @@ Molly
 Lillian
 Zach
 Ben
+Jack
 Zoe
 Tabby
 Levuis
 Gosley
-player9
-player10
-player11
-player12

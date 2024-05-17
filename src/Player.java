@@ -40,6 +40,7 @@ public class Player implements Comparable<Player>{
 	 */
 	public void setRole(Role role){
 		this.role = role;
+		role.addPlayer(this);
 	}
 
 	/**
@@ -68,6 +69,7 @@ public class Player implements Comparable<Player>{
 	 */
 	public void setCategory(Category category){
 		this.category = category;
+		category.addPlayer(this);
 	}
 
 	/**
@@ -82,6 +84,7 @@ public class Player implements Comparable<Player>{
 	 */
 	public void setFaction(Faction faction){
 		this.faction = faction;
+		faction.addPlayer(this);
 	}
 	
 	@Override
@@ -97,6 +100,10 @@ public class Player implements Comparable<Player>{
 		}
 	}
 	
+	/**
+	 * @param o the Player to be compared
+	 * @return the value 0 if the argument Player's name is equal to this string; a value less than 0 if this Player's name is lexicographically less than the string argument; and a value greater than 0 if this Player's name is lexicographically greater than the string argument.
+	 */
 	public int compareToName(Player o){
 		return this.name.compareTo(o.getName());
 	}
