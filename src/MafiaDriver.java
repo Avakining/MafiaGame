@@ -21,11 +21,13 @@ public class MafiaDriver{
 	private static Mafia mafiaGame;
 	private static Scanner scan;
 	private static Random rand;
+	private static boolean isDrunk;
 	
 	/**
 	 * @param args Arguments
 	 */
 	public static void main(String[] args){
+		isDrunk = false;
 		rand = new Random();
 		mafiaGame = new Mafia();
 		scan = new Scanner(System.in);
@@ -36,7 +38,7 @@ public class MafiaDriver{
 		assignFactions();
 		assignCategories();
 		assignRoles();
-		printGap();
+		// printGap();
 		getDrunk();
 		printGap();
 		showResults();
@@ -561,9 +563,9 @@ public class MafiaDriver{
 	}
 	
 	private static void getDrunk(){
-		System.out.println("Do you want a Drunk? (Y/n)");
-		String in = scan.nextLine();
-		if (in.toUpperCase().equals("Y")){
+		// System.out.println("Do you want a Drunk? (Y/n)");
+		// String in = scan.nextLine();
+		if (isDrunk){
 			mafiaGame.selectDrunk().setIsDrunk(true);
 		}
 	}
@@ -656,11 +658,13 @@ public class MafiaDriver{
 		result.errors().forEach(error -> System.err.println(error.toString()));
 		Set<String> factionsString = result.keySet();
 		if (factionsString.contains("Drunk")){
+			isDrunk = result.getBoolean("Drunk.is_drunk");
 			factionsString.remove("Drunk");
 		}
 		
 		int factions = 0;
 		for (String f : factionsString){
+			// System.out.println(f);
 			int categories = 0;
 			// System.out.println(f);
 			mafiaGame.addFaction(f, result.getDouble(f + ".min_num").intValue(), result.getDouble(f + ".weight"));
@@ -678,13 +682,15 @@ public class MafiaDriver{
 				// System.out.println(c);
 				mafiaGame.getFactions().get(factions).addCategory(c, result.getDouble(f + "." + c + ".min_num").intValue());
 				
-				Set<String> roleString = result.getTable(f + "." + c).keySet();
+				Set<String> roleString = result.getTable(f + "." + c + ".roles").keySet();
+				// System.out.println(roleString);
 				if (roleString.contains("min_num")){
 					roleString.remove("min_num");
 				}
+				// System.out.println(roleString);
 				for(String r : roleString) {
 					// System.out.println(r);
-					mafiaGame.getFactions().get(factions).getCategories().get(categories).addRole(r, result.getDouble(f + "." + c + "." + r + ".max_num").intValue());
+					mafiaGame.getFactions().get(factions).getCategories().get(categories).addRole(r, result.getDouble(f + "." + c + ".roles." + r + ".max_num").intValue());
 				}
 				categories++;
 			}
