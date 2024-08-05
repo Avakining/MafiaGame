@@ -1,7 +1,7 @@
-**TOWN (6)**
+**TOWN ()**
 *The town wins when all mafia and neutral killers are dead.*
 ---
-**Town Investigative (1)**
+**Town Investigative ()**
 *Sheriff*
 Each night, the Sheriff can choose a player to investigate. The Sheriff will learn if that player is good or evil.
 
@@ -14,7 +14,7 @@ Each night, the Lookout can choose a player to stake-out. The Lookout will recei
 *Tracker*
 Each night, the Tracker can choose a player to track. The Tracker will see each player they visit.
 
-**Town Protective (1)**
+**Town Protective ()**
 *Bodyguard*
 Each night, the Bodyguard can choose a player to guard, granting them powerful defence. If that player is attacked, the bodyguard will be dealt a basic attack and the bodyguard will deal a basic attack to the attacker. The bodyguard cannot guard themselves.
 
@@ -28,7 +28,7 @@ The Vigilante have three bullets. At night, the Vigilante may use one bullet to 
 *Veteran*
 Three times per game, the Veteran may choose to alert. While alerted, the Veteran has powerful defence and any player who visits the Veteran is dealt a powerful attack. Cannot be role-blocked.
 
-**Town Necrotic (1)**
+**Town Necrotic ()**
 *Medium*
 At night, the Medium has access to the dead chat. Cannot be role-blocked. Unique role.
 
@@ -48,12 +48,12 @@ During the day, if the Admirer does not currently have a lover, they may choose 
 *Mayor*
 Once per game, during the day, the Mayor may publicly reveal themself as the mayor, receiving the <@&1154246678480687184> role. After this, the Mayor's vote counts for 3 normal votes. Cannot be role-blocked. Unique role.
 
-**Random Town (3)**
+**Random Town ()**
 Random town will be assigned a random role from the town list.
 ---
 ---
 
-**NEUTRAL (1)**
+**NEUTRAL ()**
 
 ---
 ~~**Neutral Killer ()**
@@ -68,7 +68,7 @@ Each night, the Cannibal may eat another player, dealing them a basic attack. If
 *Arsonist*
 Each night, the Arsonist either chooses a player to douse or chooses to ignite. If the Arsonist chooses to ignite, all doused players are dealt an unstoppable attack. The Arsonist is notified if they accidentally douse themselves, and can forgo their night action to un-douse themselves. Cannot be role-blocked. Has basic defence at night.~~
 
-**Neutral Evil (1)**
+**Neutral Evil ()**
 *Jester*
 The Jester wins if they are executed during the day. If the Jester wins, they may haunt a player who voted for them or abstained from the vote, dealing an unstoppable attack to that player. Cannot be role-blocked. The Jester has powerful defence during the first night of the game.
 
@@ -77,12 +77,12 @@ The Executioner is given a random target at the beginning of the game. The Execu
 ---
 ---
 
-**MAFIA (2)**
+**MAFIA ()**
 *The Mafia wins when all town, neutral killers, and true neutral are dead.*
 
 *Each night, one member of the Mafia chooses a player to deal a basic attack to, while also performing their normal night action. All Mafia roles are unique.*
 
-*At the start of the game, one random Mafia member will be chosen as the Head Honcho. Once per game, if the Head Honcho is the only Mafia member, they can forgo the Mafia’s basic attack to try converting a player into a generic Mafia member with no special action. Only Town roles can be converted successfully. If this ability fails, it may be reattempted on a future night as long as the Head Honcho is still the only living Mafia member.*
+~~*At the start of the game, one random Mafia member will be chosen as the Head Honcho. Once per game, if the Head Honcho is the only Mafia member, they can forgo the Mafia’s basic attack to try converting a player into a generic Mafia member with no special action. Only Town roles can be converted successfully. If this ability fails, it may be reattempted on a future night as long as the Head Honcho is still the only living Mafia member.*~~
 
 ---
 *Consort*
@@ -98,6 +98,6 @@ Each night, the Ambusher can lie in wait outside a player’s house. They deal a
 The Framer can choose to frame a person each night. For the rest of the game, framed players will show up as evil in psychic visions or when investigated by a sheriff.
 ---
 
-**???? (1)**
+**???? ()**
 *Drunk*
 After roles are randomised, a player may be assigned the Drunk. That player will NOT know their role at the beginning of the game. Each night, the Drunk has a 1/3 chance of sobering up. If the Drunk sobers up, they will learn their role and then start taking actions the following night. If the Drunk is a member of Mafia, they will not be added to the mafia chat until they know their role. Cannot be role-blocked.

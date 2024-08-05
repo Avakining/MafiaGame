@@ -1,68 +1,79 @@
 [Town] # faction name
-	min_num = 6.0 # minimum number in this faction
-	weight = 0.4 # weight for any
-	[Town.Investigative] # category name
-		min_num = 1.0 # min_num number in category
-		[Town.Investigative.Sheriff] # role name
-			max_num = 999.0 # max number of this role, use 999.0 if no limit
-		[Town.Investigative.Psychic]
-			max_num = 999.0
-		[Town.Investigative.Lookout]
-			max_num = 999.0
-		[Town.Investigative.Tracker]
-			max_num = 999.0
-	[Town.Protective]
-		min_num = 1.0
-		[Town.Protective.Bodyguard]
-			max_num = 999.0
-		[Town.Protective.Doctor]
-			max_num = 999.0
-	[Town.Killing]
-		min_num = 0.0
-		[Town.Killing.Vigilante]
-			max_num = 999.0
-		[Town.Killing.Veteran]
-			max_num = 999.0
-	[Town.Necrotic]
-		min_num = 1.0
-		[Town.Necrotic.Medium]
-			max_num = 1.0
-		[Town.Necrotic.Necromancer]
-			max_num = 1.0
-	[Town.Support]
-		min_num = 0.0
-		[Town.Support.Swapper]
-			max_num = 1.0
-		[Town.Support.Escort]
-			max_num = 999.0
-		[Town.Support.Admirer]
-			max_num = 999.0
-		[Town.Support.Mayor]
-			max_num = 999.0
+  min_num = 7.0 # minimum number in this faction
+  weight = 0.5 # weight for any
+  [Town.Investigative] # category name
+    min_num = 1.0 # min number in category
+    [Town.Investigative.roles.Sheriff] # role name
+      max_num = inf # max number of this role
+    [Town.Investigative.roles.Psychic]
+      max_num = inf
+    [Town.Investigative.roles.Lookout]
+      max_num = inf
+    [Town.Investigative.roles.Tracker]
+      max_num = inf
+  [Town.Protective]
+    min_num = 1.0
+    [Town.Protective.roles.Bodyguard]
+      max_num = inf
+    [Town.Protective.roles.Doctor]
+      max_num = inf
+  [Town.Killing]
+    min_num = 0.0
+    [Town.Killing.roles.Vigilante]
+      max_num = inf
+    [Town.Killing.roles.Veteran]
+      max_num = inf
+  [Town.Necrotic]
+    min_num = 0.0
+    [Town.Necrotic.roles.Medium]
+      max_num = 1.0
+    [Town.Necrotic.roles.Necromancer]
+      max_num = 1.0
+  [Town.Support]
+    min_num = 0.0
+    [Town.Support.roles.Swapper]
+      max_num = 1.0
+    [Town.Support.roles.Escort]
+      max_num = inf
+    [Town.Support.roles.Admirer]
+      max_num = 1.0
+    [Town.Support.roles.Mayor]
+      max_num = 1.0
+["Neutral Killing"]
+  min_num = 0.0
+  weight = 0.0
+  ["Neutral Killing".All]
+  	min_num = 0.0
+    ["Neutral Killing".All.roles."Serial Killer"]
+      max_num = 1.0
+    ["Neutral Killing".All.roles.Cannibal]
+      max_num = 1.0
+    ["Neutral Killing".All.roles.Arsonist]
+      max_num = 1.0
 ["Neutral Evil"]
-	min_num = 1.0
-	weight = 0.3
-	["Neutral Evil".All]
-		min_num = 1.0
-		["Neutral Evil".All.Jester]
-			max_num = 1.0
-		["Neutral Evil".All.Executioner]
-			max_num = 1.0
+  min_num = 1.0
+  weight = 0.3
+  ["Neutral Evil".All]
+    min_num = 0.0
+    ["Neutral Evil".All.roles.Jester]
+      max_num = 1.0
+    ["Neutral Evil".All.roles.Executioner]
+      max_num = 1.0
 [Mafia]
-	min_num = 2.0
-	weight = 0.3
-	isHoncho = false # is there a Head Honcho? Head Honcho not supported yet
-	[Mafia.All]
-		min_num = 2.0
-		[Mafia.All.Consort]
-			max_num = 1.0
-		[Mafia.All.Consigliere]
-			max_num = 1.0
-		[Mafia.All.Ambusher]
-			max_num = 1.0
-		[Mafia.All.Magnate]
-			max_num = 1.0
-		[Mafia.All.Framer]
-			max_num = 1.0
-[[Drunk]]
-isDrunk = true # is there a drunk?
+  min_num = 2.0
+  weight = 0.2
+  isHoncho = false # is there a Head Honcho?
+  [Mafia.All]
+  min_num = 0.0
+    [Mafia.All.roles.Consort]
+      max_num = 1.0
+    [Mafia.All.roles.Consigliere]
+      max_num = 1.0
+    [Mafia.All.roles.Ambusher]
+      max_num = 1.0
+    [Mafia.All.roles.Magnate]
+      max_num = 1.0
+    [Mafia.All.roles.Framer]
+      max_num = 1.0
+[Drunk]
+  is_drunk = true # is there a drunk?
