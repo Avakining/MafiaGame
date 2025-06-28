@@ -595,7 +595,7 @@ public class MafiaDriver{
 			}
 			if (p.getRole().getName().equals("Executioner")){ // set exe target
 				boolean cont = true;
-				while (cont){
+				while (cont){ // ensure exe target isn't exe
 					int randVal = rand.nextInt(mafiaGame.getPlayers().size());
 					if (!(mafiaGame.getPlayers().get(randVal).equals(p))){
 						System.out.print("\tTarget: " + mafiaGame.getPlayers().get(randVal).getName());
