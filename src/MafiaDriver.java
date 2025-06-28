@@ -572,33 +572,43 @@ public class MafiaDriver{
 	
 	private static void showResults(){
 		mafiaGame.sortPlayers();
-		System.out.println("Results\nName\t\tFaction\t\tCategory\t\tRole\t\tExtra");
+		System.out.println("Results\nName\t\t\tFaction\t\tCategory\t\t\tRole\t\t\t\tExtra");
 		for (Player p : mafiaGame.getPlayers()){
-			System.out.print(p.getName() + "\t");
-			if (p.getName().length() <= 8){
+			int len;
+			System.out.print(p.getName());
+			len = p.getName().length();
+			while (len <= 12){
 				System.out.print("\t");
+				len += 4;
 			}
-			System.out.print(p.getFaction().getName() + "\t");
-			if (p.getFaction().getName().length() <= 8){
+			System.out.print(p.getFaction().getName());
+			len = p.getFaction().getName().length();
+			while (len <= 12){
 				System.out.print("\t");
+				len += 4;
 			}
-			System.out.print(p.getCategory().getName() + "\t");
-			if (p.getCategory().getName().length() <= 8){
+			System.out.print(p.getCategory().getName());
+			len = p.getCategory().getName().length();
+			while (len <= 16){
 				System.out.print("\t");
+				len += 4;
 			}
 			System.out.print(p.getRole().getName());
+			len = p.getRole().getName().length();
+			while (len <= 16){
+				System.out.print("\t");
+				len += 4;
+			}
+			len = 0;
 			if (p.getIsDrunk()){
-				if (p.getRole().getName().length() <= 8){
-					System.out.print("\t");
-				}
-				System.out.print("\tDrunk\t");
+				System.out.print("Drunk\t");
 			}
 			if (p.getRole().getName().equals("Executioner")){ // set exe target
 				boolean cont = true;
 				while (cont){ // ensure exe target isn't exe
 					int randVal = rand.nextInt(mafiaGame.getPlayers().size());
 					if (!(mafiaGame.getPlayers().get(randVal).equals(p))){
-						System.out.print("\tTarget: " + mafiaGame.getPlayers().get(randVal).getName());
+						System.out.print("Target: " + mafiaGame.getPlayers().get(randVal).getName());
 						cont = false;
 					}
 				}

@@ -39,25 +39,22 @@
       max_num = 1.0
     [Town.Support.roles.Mayor]
       max_num = 1.0
-["Neutral Killing"]
-  min_num = 0.0
-  weight = 0.0
-  ["Neutral Killing".All]
-  	min_num = 0.0
-    ["Neutral Killing".All.roles."Serial Killer"]
-      max_num = 1.0
-    ["Neutral Killing".All.roles.Cannibal]
-      max_num = 1.0
-    ["Neutral Killing".All.roles.Arsonist]
-      max_num = 1.0
-["Neutral Evil"]
+[Neutral]
   min_num = 1.0
   weight = 0.3
-  ["Neutral Evil".All]
-    min_num = 0.0
-    ["Neutral Evil".All.roles.Jester]
+  [Neutral.Killing]
+  	min_num = 0.0
+    [Neutral.Killing.roles."Serial Killer"]
+      max_num = 0.0
+    [Neutral.Killing.roles.Cannibal]
+      max_num = 0.0
+    [Neutral.Killing.roles.Arsonist]
+      max_num = 0.0
+  [Neutral.Evil]
+    min_num = 1.0
+    [Neutral.Evil.roles.Jester]
       max_num = 1.0
-    ["Neutral Evil".All.roles.Executioner]
+    [Neutral.Evil.roles.Executioner]
       max_num = 1.0
 [Mafia]
   min_num = 2.0
