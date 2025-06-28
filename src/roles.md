@@ -6,7 +6,7 @@
 Each night, the Sheriff can choose a player to investigate. The Sheriff will learn if that player is good or evil.
 
 *Psychic*
-On odd numbered nights, the Psychic will receive a list of 3 players, one of whom is guaranteed to be evil. On even numbered nights, the Psychic will receive a list of 2 players, one of whom is guaranteed to be good.
+On even numbered nights, the Psychic will receive a list of 3 players, one of whom is guaranteed to be evil. On odd numbered nights, the Psychic will receive a list of 2 players, one of whom is guaranteed to be good. The night before Day 1 is considered Night 0.
 
 *Lookout*
 Each night, the Lookout can choose a player to stake-out. The Lookout will receive a list of players who visit them.
@@ -73,7 +73,7 @@ Each night, the Arsonist either chooses a player to douse or chooses to ignite. 
 The Jester wins if they are executed during the day. If the Jester wins, they may haunt a player who voted for them or abstained from the vote, dealing an unstoppable attack to that player. Cannot be role-blocked. The Jester has powerful defence during the first night of the game.
 
 *Executioner*
-The Executioner is given a random target at the beginning of the game. The Executioner wins if their target is executed during the day. If the Executioner's target dies during the night, the Executioner becomes a Jester. The Executioner has basic defence at night.
+The Executioner is given a random target at the beginning of the game. The Executioner wins if their target is executed during the day. If the Executioner's target dies during the night, the Executioner becomes a Jester. Cannot be role-blocked. The Executioner has basic defence at night.
 ---
 ---
 
