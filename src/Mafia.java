@@ -14,7 +14,8 @@ import java.util.Scanner;
 public class Mafia{
 	private ArrayList<Player> players;
 	private ArrayList<Faction> factions;
-	private ArrayList<Faction> allowedAny;
+	private ArrayList<Faction> factionsLeft;
+	// private ArrayList<Faction> allowedAny;
 	
 	/**
 	 * Constructor
@@ -22,7 +23,8 @@ public class Mafia{
 	public Mafia(){
 		players = new ArrayList<Player>();
 		factions = new ArrayList<Faction>();
-		setAllowedAny(new ArrayList<Faction>());
+		factionsLeft = new ArrayList<Faction>();
+		// setAllowedAny(new ArrayList<Faction>());
 	}
 	
 	/**
@@ -107,6 +109,7 @@ public class Mafia{
 	 */
 	public void addFaction(Faction faction){
 		factions.add(faction);
+		factionsLeft.add(faction);
 	}
 	
 	/**
@@ -115,7 +118,7 @@ public class Mafia{
 	 * @param weight weight for "Any"
 	 */
 	public void addFaction(String name, int num, double weight){
-		factions.add(new Faction(name, num, weight));
+		this.addFaction(new Faction(name, num, weight));
 	}
 	
 	/**
@@ -133,30 +136,16 @@ public class Mafia{
 	public ArrayList<Faction> getFactions(){
 		return factions;
 	}
-
-	/**
-	 * @return the allowedAny
-	 */
-	public ArrayList<Faction> getAllowedAny(){
-		return allowedAny;
-	}
-
-	/**
-	 * @param allowedAny the allowedAny to set
-	 */
-	public void setAllowedAny(ArrayList<Faction> allowedAny){
-		this.allowedAny = allowedAny;
-	}
 	
 	/**
-	 * Sorts players alphabetically by name
+	 * Sorts players in roles
 	 */
 	public void sortPlayers(){
 		players.sort(null);
 	}
 	
 	/**
-	 * Sorts players ArrayList alphabetically
+	 * Sorts players alphabetically by name
 	 */
 	public void sortPlayersByName(){
 		Boolean cont = true;
@@ -169,5 +158,19 @@ public class Mafia{
 				}
 			}
 		}
+	}
+	
+	/**
+	 * @return the factionsLeft
+	 */
+	public ArrayList<Faction> getFactionsLeft(){
+		return factionsLeft;
+	}
+	
+	/**
+	 * @param f the Faction to remove
+	 */
+	public void removeFactionsLeft(Faction f){
+		this.factionsLeft.remove(f);
 	}
 }

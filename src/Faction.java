@@ -13,6 +13,8 @@ public class Faction{
 	private ArrayList<Category> categories;
 	private double weight;
 	private ArrayList<Player> players;
+	private int maxNum;
+	private ArrayList<Category> categoriesLeft;
 	
 	/**
 	 * @param name Faction name
@@ -25,14 +27,22 @@ public class Faction{
 		categories = new ArrayList<Category>();
 		this.weight = weight;
 		this.players = new ArrayList<Player>();
+		this.categoriesLeft = new ArrayList<Category>();
 	}
 	
+	/**
+	 * @param c Category to add
+	 */
+	public void addCategory(Category c){
+		categories.add(c);
+		categoriesLeft.add(c);
+	}
 	/**
 	 * @param name Category name
 	 * @param num minimum number
 	 */
 	public void addCategory(String name, int num){
-		categories.add(new Category(name, num));
+		this.addCategory(new Category(name, num));
 	}
 
 	/**
@@ -75,5 +85,33 @@ public class Faction{
 	 */
 	public ArrayList<Player> getPlayers(){
 		return players;
+	}
+
+	/**
+	 * @return the maxNum
+	 */
+	public int getMaxNum(){
+		return maxNum;
+	}
+
+	/**
+	 * @param maxNum the maxNum to set
+	 */
+	public void setMaxNum(int maxNum){
+		this.maxNum = maxNum;
+	}
+
+	/**
+	 * @return the Categories in this Faction that are not full
+	 */
+	public ArrayList<Category> getCategoriesLeft(){
+		return categoriesLeft;
+	}
+
+	/**
+	 * @param c the Category to remove
+	 */
+	public void removeCategoriesLeft(Category c){
+		this.categoriesLeft.remove(c);
 	}
 }

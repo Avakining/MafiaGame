@@ -12,7 +12,9 @@ public class Category{
 	private String name;
 	private int minNum;
 	private HashSet<Role> roles;
+	private HashSet<Role> rolesLeft;
 	private ArrayList<Player> players;
+	private int maxNum;
 	
 	/**
 	 * Constructor
@@ -24,6 +26,7 @@ public class Category{
 		this.minNum = minNum;
 		this.roles = new HashSet<Role>();
 		this.players = new ArrayList<Player>();
+		this.rolesLeft = new HashSet<Role>(roles);
 	}
 	
 	/**
@@ -97,4 +100,34 @@ public class Category{
 	public ArrayList<Player> getPlayers(){
 		return players;
 	}
+
+	/**
+	 * @return the maxNum
+	 */
+	public int getMaxNum(){
+		return maxNum;
+	}
+
+	/**
+	 * @param maxNum the maxNum to set
+	 */
+	public void setMaxNum(int maxNum){
+		this.maxNum = maxNum;
+	}
+
+	/**
+	 * @return the Roles in this Category that are not full
+	 */
+	public ArrayList<Role> getRolesLeft(){
+		ArrayList<Role> arr = new ArrayList<Role>(rolesLeft);
+		return arr;
+	}
+
+	/**
+	 * @param r Role to remove
+	 */
+	public void removeRolesLeft(Role r){
+		this.rolesLeft.remove(r);
+	}
+	
 }

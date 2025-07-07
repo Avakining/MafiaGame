@@ -60,17 +60,17 @@
   min_num = 2.0
   weight = 0.2
   isHoncho = false # is there a Head Honcho?
-  [Mafia.All]
+  [Mafia.Mafia]
   min_num = 0.0
-    [Mafia.All.roles.Consort]
+    [Mafia.Mafia.roles.Consort]
       max_num = 1.0
-    [Mafia.All.roles.Consigliere]
+    [Mafia.Mafia.roles.Consigliere]
       max_num = 1.0
-    [Mafia.All.roles.Ambusher]
+    [Mafia.Mafia.roles.Ambusher]
       max_num = 1.0
-    [Mafia.All.roles.Magnate]
+    [Mafia.Mafia.roles.Magnate]
       max_num = 0.0
-    [Mafia.All.roles.Framer]
+    [Mafia.Mafia.roles.Framer]
       max_num = 1.0
 [Drunk]
   is_drunk = true # is there a drunk?
