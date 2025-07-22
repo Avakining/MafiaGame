@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"Category"},{"p":"<Unnamed>","l":"Faction"},{"p":"<Unnamed>","l":"ListUtils"},{"p":"<Unnamed>","l":"Mafia"},{"p":"<Unnamed>","l":"MafiaDriver"},{"p":"<Unnamed>","l":"Player"},{"p":"<Unnamed>","l":"Role"}];updateSearchResults();
