@@ -42,6 +42,7 @@ public class MafiaDriver{
 		getDrunk();
 		printGap();
 		showResults();
+		writeSaveFile();
 		scan.close();
 	}
 	
@@ -301,5 +302,12 @@ public class MafiaDriver{
 		for (Player p : mafiaGame.getPlayers()){
 			System.out.println(p.getName());
 		}
+	}
+	
+	private static void writeSaveFile(){
+		System.out.println("Saving game to savefile.mafia ...");
+		
+		// File save = new File("savefile.mafia");
+		// save.createNewFile();
 	}
 }
