@@ -2,12 +2,13 @@
  * @author Celeste Partan
  */
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * 
  */
-public class Role{
+public class Role implements Serializable{
 	private int maxNum;
 	private String name;
 	private int numCurr;

@@ -5,7 +5,7 @@
 import java.util.ArrayList;
 
 /**
- * *
+ * * Collection of ArrayList utilities
  */
 public class ListUtils{
 	/**

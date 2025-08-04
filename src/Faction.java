@@ -2,12 +2,13 @@
  * @author Celeste Partan
  */
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * 
  */
-public class Faction{
+public class Faction implements Serializable{
 	private int minNum;
 	private String factionName;
 	private ArrayList<Category> categories;

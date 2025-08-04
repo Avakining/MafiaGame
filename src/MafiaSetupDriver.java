@@ -17,7 +17,7 @@ import java.nio.file.*;
 /**
  * Driver class
  */
-public class MafiaDriver{
+public class MafiaSetupDriver{
 	private static Mafia mafiaGame;
 	private static Scanner scan;
 	private static Random rand;
@@ -60,9 +60,9 @@ public class MafiaDriver{
 	private static void playersFromFile(){
 		Scanner scanF;
 		ArrayList<String> players = new ArrayList<>();
-		File playersF = new File("players.txt");
+		File playersF = new File("players.txt"); // look for players.txt in default location
 		System.out.println("Looking at: " + playersF.getAbsolutePath());
-		while (!playersF.exists() && !playersF.canRead()){
+		while (!playersF.exists() && !playersF.canRead()){ // if not there or not readable, ask for path
 			System.err.println("File is not in expected location");
 			System.out.println("Please enter the path to players.txt:");
 			String in = scan.nextLine();
@@ -73,7 +73,7 @@ public class MafiaDriver{
 			while (scanF.hasNextLine()){
 				players.add(scanF.nextLine());
 			}
-		} catch (FileNotFoundException e){ // this should never happen
+		} catch (FileNotFoundException e){ // this should only happen if the players.txt file moves while the program is running
 			e.printStackTrace();
 		}
 		
@@ -305,9 +305,13 @@ public class MafiaDriver{
 	}
 	
 	private static void writeSaveFile(){
-		System.out.println("Saving game to savefile.mafia ...");
-		
-		// File save = new File("savefile.mafia");
-		// save.createNewFile();
+		System.out.println("Saving game...");
+		try{
+			SaveUtils.saveGame(mafiaGame, "save.mafia");
+			System.out.println("Saved");
+		} catch (IOException e){
+			System.err.println("Error saving file");
+			e.printStackTrace();
+		}
 	}
 }

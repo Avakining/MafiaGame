@@ -2,13 +2,14 @@
  * @author Celeste Partan
  */
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
  * 
  */
-public class Category{
+public class Category implements Serializable{
 	private String name;
 	private int minNum;
 	private HashSet<Role> roles;
