@@ -2,10 +2,12 @@
  * @author Celeste Partan
  */
 
+import java.io.Serializable;
+
 /**
  * 
  */
-public class Player implements Comparable<Player>{
+public class Player implements Comparable<Player>, Serializable{
 	private String name;
 	private Role role;
 	private Faction faction;

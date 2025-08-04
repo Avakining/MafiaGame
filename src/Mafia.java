@@ -3,6 +3,7 @@
  */
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 /**
  * Main class to control the Mafia game
  */
-public class Mafia{
+public class Mafia implements Serializable{
 	private ArrayList<Player> players;
 	private ArrayList<Faction> factions;
 	private ArrayList<Faction> factionsLeft;
