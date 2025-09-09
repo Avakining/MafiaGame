@@ -13,6 +13,8 @@ public class Player implements Comparable<Player>, Serializable{
 	private Faction faction;
 	private Category category;
 	private Boolean isDrunk;
+	private Player target;
+	private Boolean isAlive;
 	
 	/**
 	 * Constructor
@@ -21,6 +23,8 @@ public class Player implements Comparable<Player>, Serializable{
 	public Player(String n){
 		name = n;
 		isDrunk = false;
+		target = null;
+		isAlive = true;
 	}
 
 	/**
@@ -108,5 +112,47 @@ public class Player implements Comparable<Player>, Serializable{
 	 */
 	public int compareToName(Player o){
 		return this.name.compareTo(o.getName());
+	}
+	
+	/**
+	 * @return True if and only if this Player has a target
+	 */
+	public boolean hasTarget(){
+		return !target.equals(null);
+	}
+	
+	/**
+	 * @param p Player to set as this Player's target
+	 */
+	public void setTarget(Player p){
+		this.target = p;
+	}
+	
+	/**
+	 * @return this Player's target
+	 */
+	public Player getTarget(){
+		return this.target;
+	}
+
+	/**
+	 * @return the isAlive
+	 */
+	public Boolean getIsAlive(){
+		return isAlive;
+	}
+
+	/**
+	 * Marks this Player as dead
+	 */
+	public void killPlayer(){
+		this.isAlive = false;
+	}
+	
+	/**
+	 * Marks this Player as alive
+	 */
+	public void ressurectPlayer(){
+		this.isAlive = true;
 	}
 }

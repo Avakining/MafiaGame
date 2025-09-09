@@ -1,4 +1,3 @@
-
 /**
  * @author Celeste Partan
  */
@@ -15,7 +14,7 @@ import org.tomlj.*;
 import java.nio.file.*;
 
 /**
- * Driver class
+ * Using a players.txt and factions_roles.toml file, automatically assigns factions, roles, and role-specific details to all players in a game of Mafia.
  */
 public class MafiaSetupDriver{
 	private static Mafia mafiaGame;
@@ -31,7 +30,7 @@ public class MafiaSetupDriver{
 		rand = new Random();
 		mafiaGame = new Mafia();
 		scan = new Scanner(System.in);
-		System.out.println("Welcome to the Mafia GM Utility!"/* + "\nYou may be asked to enter values. Each time this happens, type in the value requested then hit enter."*/);
+		System.out.println("Welcome to the Mafia GM Utility setup module!"/* + "\nYou may be asked to enter values. Each time this happens, type in the value requested then hit enter."*/);
 		playersFromFile();
 		// printGap();
 		rolesFromFile();
@@ -88,7 +87,7 @@ public class MafiaSetupDriver{
 	private static void rolesFromFile(){
 		Path source = Paths.get("factions_roles.toml");
 		TomlParseResult result = null;
-		while (!source.toFile().exists() && !source.toFile().canRead()){
+		while (!(source.toFile().exists() && source.toFile().canRead())){
 			System.err.println("File is not in expected location");
 			System.out.println("Please enter the path to factions_roles.toml:");
 			String in = scan.nextLine();
@@ -236,6 +235,16 @@ public class MafiaSetupDriver{
 				int randVal = rand.nextInt(p.getCategory().getRoles().size());
 				if (p.getCategory().getRoles().get(randVal).getPlayers().size() < p.getCategory().getRoles().get(randVal).getMaxNum()){ // make sure there's room in the role
 					p.setRole(p.getCategory().getRoles().get(randVal));
+					if (p.getRole().getName().equals("Executioner")){ // set exe target
+						boolean cont = true;
+						while (cont){ // ensure exe target isn't exe
+							randVal = rand.nextInt(mafiaGame.getPlayers().size());
+							if (!(mafiaGame.getPlayers().get(randVal).equals(p))){
+								p.setTarget(mafiaGame.getPlayers().get(randVal));
+								cont = false;
+							}
+						}
+					}
 				} // else{
 				// p.getCategory().removeRolesLeft(p.getCategory().getRolesLeft().get(randVal));
 				// }
@@ -284,15 +293,8 @@ public class MafiaSetupDriver{
 			if (p.getIsDrunk()){
 				System.out.print("Drunk    ");
 			}
-			if (p.getRole().getName().equals("Executioner")){ // set exe target
-				boolean cont = true;
-				while (cont){ // ensure exe target isn't exe
-					int randVal = rand.nextInt(mafiaGame.getPlayers().size());
-					if (!(mafiaGame.getPlayers().get(randVal).equals(p))){
-						System.out.print("Target: " + mafiaGame.getPlayers().get(randVal).getName());
-						cont = false;
-					}
-				}
+			if (p.getRole().getName().equals("Executioner")){
+				System.out.print("Target: " + p.getTarget().getName());
 			}
 			System.out.println();
 		}
@@ -308,7 +310,7 @@ public class MafiaSetupDriver{
 		System.out.println("Saving game...");
 		try{
 			SaveUtils.saveGame(mafiaGame, "save.mafia");
-			System.out.println("Saved");
+			System.out.println("Saved.");
 		} catch (IOException e){
 			System.err.println("Error saving file");
 			e.printStackTrace();
