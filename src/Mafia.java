@@ -16,7 +16,7 @@ public class Mafia implements Serializable{
 	private ArrayList<Player> players;
 	private ArrayList<Faction> factions;
 	private ArrayList<Faction> factionsLeft;
-	// private ArrayList<Faction> allowedAny;
+	private short day;
 	
 	/**
 	 * Constructor
@@ -25,7 +25,17 @@ public class Mafia implements Serializable{
 		players = new ArrayList<Player>();
 		factions = new ArrayList<Faction>();
 		factionsLeft = new ArrayList<Faction>();
-		// setAllowedAny(new ArrayList<Faction>());
+		day = 0;
+	}
+	
+	/**
+	 * Constructor
+	 * @param mafiaGame Mafia object to copy
+	 */
+	public Mafia(Mafia mafiaGame){
+		this.players = new ArrayList<Player>(mafiaGame.getPlayers());
+		this.factions = new ArrayList<Faction>(mafiaGame.getFactions());
+		this.factionsLeft = new ArrayList<Faction>(mafiaGame.getFactionsLeft());
 	}
 	
 	/**
@@ -173,5 +183,19 @@ public class Mafia implements Serializable{
 	 */
 	public void removeFactionsLeft(Faction f){
 		this.factionsLeft.remove(f);
+	}
+
+	/**
+	 * @return the day
+	 */
+	public short getDay(){
+		return day;
+	}
+
+	/**
+	 * Add 1 to the current day
+	 */
+	public void incrementDay(){
+		this.day += 1;
 	}
 }
