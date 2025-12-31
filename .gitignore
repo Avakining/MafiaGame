@@ -26,3 +26,11 @@ replay_pid*
 /target/
 /bin/*
 /target/*
+
+# mafia save file
+save.mafia
+/save.mafia
+
+# players.txt (may contain PII)
+players.txt
+/players.txt
