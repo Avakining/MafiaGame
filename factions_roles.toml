@@ -6,23 +6,23 @@
     [Town.Investigative.roles.Sheriff] # role name
       max_num = inf # max number of this role
     [Town.Investigative.roles.Psychic]
-      max_num = 1.0
+      max_num = inf
     [Town.Investigative.roles.Lookout]
       max_num = inf
     [Town.Investigative.roles.Tracker]
       max_num = inf
   [Town.Protective]
-    min_num = 0.0
+    min_num = 1.0
     [Town.Protective.roles.Bodyguard]
-      max_num = 1.0
+      max_num = inf
     [Town.Protective.roles.Doctor]
-      max_num = 1.0
+      max_num = inf
   [Town.Killing]
     min_num = 0.0
     [Town.Killing.roles.Vigilante]
-      max_num = 1.0
+      max_num = inf
     [Town.Killing.roles.Veteran]
-      max_num = 1.0
+      max_num = inf
   [Town.Necrotic]
     min_num = 0.0
     [Town.Necrotic.roles.Medium]
@@ -30,7 +30,7 @@
     [Town.Necrotic.roles.Necromancer]
       max_num = 1.0
   [Town.Support]
-    min_num = 1.0
+    min_num = 0.0
     [Town.Support.roles.Swapper]
       max_num = 1.0
     [Town.Support.roles.Escort]
@@ -39,38 +39,41 @@
       max_num = 1.0
     [Town.Support.roles.Mayor]
       max_num = 1.0
-[Neutral]
+["Neutral Killing"]
+  min_num = 0.0
+  weight = 0.0
+  ["Neutral Killing".All]
+  	min_num = 0.0
+    ["Neutral Killing".All.roles."Serial Killer"]
+      max_num = 1.0
+    ["Neutral Killing".All.roles.Cannibal]
+      max_num = 1.0
+    ["Neutral Killing".All.roles.Arsonist]
+      max_num = 1.0
+["Neutral Evil"]
   min_num = 1.0
   weight = 0.3
-  [Neutral.Killing]
-  	min_num = 0.0
-    [Neutral.Killing.roles."Serial Killer"]
-      max_num = 0.0
-    [Neutral.Killing.roles.Cannibal]
-      max_num = 0.0
-    [Neutral.Killing.roles.Arsonist]
-      max_num = 0.0
-  [Neutral.Evil]
-    min_num = 1.0
-    [Neutral.Evil.roles.Jester]
+  ["Neutral Evil".All]
+    min_num = 0.0
+    ["Neutral Evil".All.roles.Jester]
       max_num = 1.0
-    [Neutral.Evil.roles.Executioner]
+    ["Neutral Evil".All.roles.Executioner]
       max_num = 1.0
 [Mafia]
   min_num = 2.0
   weight = 0.2
   isHoncho = false # is there a Head Honcho?
-  [Mafia.Mafia]
+  [Mafia.All]
   min_num = 0.0
-    [Mafia.Mafia.roles.Consort]
+    [Mafia.All.roles.Consort]
       max_num = 1.0
-    [Mafia.Mafia.roles.Consigliere]
+    [Mafia.All.roles.Consigliere]
       max_num = 1.0
-    [Mafia.Mafia.roles.Ambusher]
+    [Mafia.All.roles.Ambusher]
       max_num = 1.0
-    [Mafia.Mafia.roles.Magnate]
-      max_num = 0.0
-    [Mafia.Mafia.roles.Framer]
+    [Mafia.All.roles.Magnate]
+      max_num = 1.0
+    [Mafia.All.roles.Framer]
       max_num = 1.0
 [Drunk]
   is_drunk = true # is there a drunk?
