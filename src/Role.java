@@ -13,13 +13,15 @@ public class Role implements Serializable{
 	private String name;
 	private int numCurr;
 	private ArrayList<Player> players;
+	private int abilityChargesLeft;
 	
 	/**
 	 * Constructor
 	 * @param name Role name
 	 * @param maxNum Maximum number of this role
+	 * @param abilityCharges Number of initial charges for class ability (if applicable)
 	 */
-	public Role(String name, int maxNum) {
+	public Role(String name, int maxNum, int abilityCharges){
 		this.name = name;
 		this.maxNum = maxNum;
 		numCurr = 0;
@@ -29,10 +31,19 @@ public class Role implements Serializable{
 	/**
 	 * Constructor
 	 * @param name Role name
+	 * @param maxNum Maximum number of this role
+	 */
+	public Role(String name, int maxNum){
+		this(name, maxNum, 0);
+	}
+	
+	/**
+	 * Constructor
+	 * @param name Role name
 	 * @param isUnique Is this role unique?
 	 */
 	public Role(String name, Boolean isUnique){
-		this(name, 1);
+		this(name, 1, 0);
 	}
 
 	/**
@@ -74,5 +85,12 @@ public class Role implements Serializable{
 	 */
 	public ArrayList<Player> getPlayers(){
 		return players;
+	}
+
+	/**
+	 * @return the abilityChargesLeft
+	 */
+	public int getAbilityChargesLeft(){
+		return abilityChargesLeft;
 	}
 }

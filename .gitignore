@@ -34,3 +34,4 @@ save.mafia
 # players.txt (may contain PII)
 players.txt
 /players.txt
+/factions_roles.toml

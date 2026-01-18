@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import org.tomlj.*;
 import java.nio.file.*;
+import io.github.wasabithumb.jtoml.*;
 
 /**
  * Using a players.txt and factions_roles.toml file, automatically assigns factions, roles, and role-specific details to all players in a game of Mafia.

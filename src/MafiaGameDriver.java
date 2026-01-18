@@ -5,7 +5,7 @@
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Random;
+// import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class MafiaGameDriver{
 	private static Mafia mafiaGame;
 	private static Scanner scan;
-	private static Random rand;
+	// private static Random rand;
 	
 	/**
 	 * @param args Arguments*

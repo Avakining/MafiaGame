@@ -15,6 +15,8 @@ public class Player implements Comparable<Player>, Serializable{
 	private Boolean isDrunk;
 	private Player target;
 	private Boolean isAlive;
+	private Boolean appearsEvil;
+	private int roleAbilityChargesLeft;
 	
 	/**
 	 * Constructor
@@ -25,6 +27,7 @@ public class Player implements Comparable<Player>, Serializable{
 		isDrunk = false;
 		target = null;
 		isAlive = true;
+		decementRoleAbilityChargesLeft(0);
 	}
 
 	/**
@@ -91,6 +94,7 @@ public class Player implements Comparable<Player>, Serializable{
 	public void setFaction(Faction faction){
 		this.faction = faction;
 		faction.addPlayer(this);
+		this.appearsEvil = faction.isEvil();
 	}
 	
 	@Override
@@ -154,5 +158,46 @@ public class Player implements Comparable<Player>, Serializable{
 	 */
 	public void ressurectPlayer(){
 		this.isAlive = true;
+	}
+	
+	/**
+	 * @return Returns 1 if player is successfully framed. Otherwise, returns 0
+	 */
+	public int framePlayer(){
+		if (!appearsEvil){
+			appearsEvil = true;
+			return 1;
+		} else{
+			return 0;
+		}
+	}
+
+	/**
+	 * Get number of role ability charges this player has left (if applicable)
+	 * @return the roleAbilityChargesLeft
+	 */
+	public int getRoleAbilityChargesLeft(){
+		return roleAbilityChargesLeft;
+	}
+
+	/**
+	 * @param decrement How much to subtract from number of role ability charges. If negative, ability charges will be increased.
+	 * @return Returns 1 if successfully decreased. Returns -1 if not enough charges left.
+	 */
+	public int decementRoleAbilityChargesLeft(int decrement){
+		if (roleAbilityChargesLeft - decrement >= 0){
+			this.roleAbilityChargesLeft -= decrement;
+			return 1;
+		} else{
+			return -1;
+		}
+	}
+	
+	/**
+	 * Uses up 1 role ability charge
+	 * @return Returns 1 if successfully decremented. Returns -1 if no charges left.
+	 */
+	public int decementRoleAbilityChargesLeft(){
+		return this.decementRoleAbilityChargesLeft(1);
 	}
 }

@@ -16,6 +16,23 @@ public class Faction implements Serializable{
 	private ArrayList<Player> players;
 	private int maxNum;
 	private ArrayList<Category> categoriesLeft;
+	private Boolean evil;
+	
+	/**
+	 * @param name Faction name
+	 * @param num minimum number
+	 * @param weight weight for Any
+	 * @param evil is this faction Evil?
+	 */
+	public Faction(String name, int num, double weight, Boolean evil){
+		minNum = num;
+		this.factionName = name;
+		categories = new ArrayList<Category>();
+		this.weight = weight;
+		this.players = new ArrayList<Player>();
+		this.categoriesLeft = new ArrayList<Category>();
+		this.evil = evil;
+	}
 	
 	/**
 	 * @param name Faction name
@@ -23,14 +40,10 @@ public class Faction implements Serializable{
 	 * @param weight weight for Any
 	 */
 	public Faction(String name, int num, double weight){
-		minNum = num;
-		this.factionName = name;
-		categories = new ArrayList<Category>();
-		this.weight = weight;
-		this.players = new ArrayList<Player>();
-		this.categoriesLeft = new ArrayList<Category>();
+		this(name, num, weight, false);
 	}
 	
+
 	/**
 	 * @param c Category to add
 	 */
@@ -114,5 +127,12 @@ public class Faction implements Serializable{
 	 */
 	public void removeCategoriesLeft(Category c){
 		this.categoriesLeft.remove(c);
+	}
+
+	/**
+	 * @return is this faction Evil?
+	 */
+	public Boolean isEvil(){
+		return evil;
 	}
 }

@@ -133,6 +133,16 @@ public class Mafia implements Serializable{
 	}
 	
 	/**
+	 * @param name Name of faction to add
+	 * @param num Minimum number of players in that faction
+	 * @param weight weight for "Any"
+	 * @param isEvil is this faction evil?
+	 */
+	public void addFaction(String name, int num, double weight, Boolean isEvil){
+		this.addFaction(new Faction(name, num, weight, isEvil));
+	}
+	
+	/**
 	 * Select a Player to be the Drunk
 	 * @return Drunk Player
 	 */

@@ -57,7 +57,7 @@ Random town will be assigned a random role from the town list.
 
 ---
 ~~**Neutral Killer ()**
-*The neutral killer wins when all town, mafia, and true neutral are dead.*
+*The neutral killer wins when all town, mafia, and true neutral are dead. An Evil faction.*
 
 *Serial Killer*
 Each night, the Serial Killer may deal a basic attack to a player. If the Serial Killer is role-blocked, they deal a basic attack to the role-blocker in place of their original target. Has basic defence at night.
@@ -69,6 +69,8 @@ Each night, the Cannibal may eat another player, dealing them a basic attack. If
 Each night, the Arsonist either chooses a player to douse or chooses to ignite. If the Arsonist chooses to ignite, all doused players are dealt an unstoppable attack. The Arsonist is notified if they accidentally douse themselves, and can forgo their night action to un-douse themselves. Cannot be role-blocked. Has basic defence at night.~~
 
 **Neutral Evil ()**
+*The neutral evil has their own unique win conditions. An Evil faction.*
+
 *Jester*
 The Jester wins if they are executed during the day. If the Jester wins, they may haunt a player who voted for them or abstained from the vote, dealing an unstoppable attack to that player. Cannot be role-blocked. The Jester has powerful defence during the first night of the game.
 
@@ -78,7 +80,7 @@ The Executioner is given a random target at the beginning of the game. The Execu
 ---
 
 **MAFIA ()**
-*The Mafia wins when all town, neutral killers, and true neutral are dead.*
+*The Mafia wins when all town, neutral killers, and true neutral are dead. An Evil faction.*
 
 *Each night, one member of the Mafia chooses a player to deal a basic attack to, while also performing their normal night action. All Mafia roles are unique.*
 
