@@ -111,7 +111,7 @@ public class MafiaSetupDriver{
 			// System.out.println(f);
 			int categories = 0;
 			// System.out.println(f);
-			mafiaGame.addFaction(f, result.getDouble(f + ".min_num").intValue(), result.getDouble(f + ".weight"));
+			mafiaGame.addFaction(f, result.getDouble(f + ".min_num").intValue(), result.getDouble(f + ".weight"), result.getBoolean(f + ".isEvil"));
 			Set<String> categoryString = result.getTable(f).keySet();
 			if (categoryString.contains("min_num")){
 				categoryString.remove("min_num");
