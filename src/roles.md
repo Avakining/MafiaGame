@@ -87,6 +87,9 @@ The Executioner is given a random target at the beginning of the game. The Execu
 ---
 *Consort*
 Each night, the Consort may choose a player to role-block. That player cannot take night actions. Cannot block the same player twice in a row. Cannot be role-blocked.
+
+*Poisoner*
+Each night, the Poisoner may choose a player to poison. That player cannot will be given incorrect information if they can be role-blocked and will not be told. Cannot poison the same player twice in a row. Cannot be role-blocked or poisoned.
  
 *Consigliere*
 Each night, the Consigliere may investigate a player, learning their exact role.
